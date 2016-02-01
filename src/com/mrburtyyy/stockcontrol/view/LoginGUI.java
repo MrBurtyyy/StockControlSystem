@@ -115,7 +115,7 @@ public class LoginGUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        System.exit(0);
+        ViewController.GetInstance().CloseApplication();
     }//GEN-LAST:event_btnExitActionPerformed
 
     

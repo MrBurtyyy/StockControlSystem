@@ -1,8 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This class follows the singleton pattern so there is only
+ * one instance of the GUI running at any one time.
+ * It is first created when the user logs into the system and
+ * is then hidden/shown when it is not needed, and only closed when
+ * the entire application is closed.
  */
+
 package com.mrburtyyy.stockcontrol.controller;
 
 import javax.swing.JFrame;
@@ -34,13 +37,21 @@ public class ViewController implements IViewController {
     }
 
     @Override
-    public void Open(JFrame open) {
+    public void OpenWindow(JFrame open) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void Close(JFrame close) {
+    public void CloseWindow(JFrame close) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    /**
+     * Close with error code 0 (Good exit)
+     */
+    @Override
+    public void CloseApplication() {
+        System.exit(0);
     }
     
 }

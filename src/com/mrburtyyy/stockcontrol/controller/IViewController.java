@@ -15,8 +15,10 @@ public interface IViewController {
     
     void OpenNewAndClose(JFrame open, JFrame close);
     
-    void Open(JFrame open);
+    void OpenWindow(JFrame open);
     
-    void Close(JFrame close);
+    void CloseWindow(JFrame close);
+    
+    void CloseApplication();
     
 }

@@ -5,8 +5,11 @@
  */
 package com.mrburtyyy.stockcontrol.view;
 
+import com.mrburtyyy.stockcontrol.controller.LoginAuth;
 import com.mrburtyyy.stockcontrol.controller.ViewController;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
+import javafx.scene.input.KeyCode;
 
 /**
  *
@@ -42,6 +45,11 @@ public class LoginGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("loginFrame"); // NOI18N
         setResizable(false);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Username:");
@@ -124,13 +132,23 @@ public class LoginGUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // THIS NEEDS TO BE CHANGED LATER
-        if ("MrBurtyyy".equals(this.txtUsername.getText())
-                && Arrays.equals("password".toCharArray(), this.txtPassword.getPassword())) {
-            ViewController.GetInstance().OpenNewAndClose(new MainGUI(), this);
-        }
+        CheckLogin();
     }//GEN-LAST:event_btnLoginActionPerformed
+    
+    /**
+     * Called when a key is pressed on the LoginGUI
+    */
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            CheckLogin();
+        }
+    }//GEN-LAST:event_formKeyPressed
 
+    private boolean CheckLogin() {
+        LoginAuth login = new LoginAuth();
+        return login.CheckUsername(this.txtUsername.getText()) && login.CheckPassword(this.txtPassword.getPassword());
+    }
+    
     /**
      * @param args the command line arguments
      */

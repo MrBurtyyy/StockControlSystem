@@ -1,14 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Code taken from: http://stackoverflow.com/questions/6790600/java-gui-hides-windows-taskbar
  */
 package com.mrburtyyy.stockcontrol.view;
 
 import com.mrburtyyy.stockcontrol.controller.ViewController;
-import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 /**
@@ -108,6 +104,7 @@ public class MainGUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new MainGUI().setVisible(true);
             }

@@ -1,15 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Author: Alex Burt
+ * Created: 01/02/16
  */
+
+
 package com.mrburtyyy.stockcontrol.view;
 
 import com.mrburtyyy.stockcontrol.controller.LoginAuth;
 import com.mrburtyyy.stockcontrol.controller.ViewController;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
-import javafx.scene.input.KeyCode;
 
 /**
  *
@@ -45,11 +44,6 @@ public class LoginGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("loginFrame"); // NOI18N
         setResizable(false);
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                formKeyPressed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Username:");
@@ -68,6 +62,12 @@ public class LoginGUI extends javax.swing.JFrame {
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
+            }
+        });
+
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyPressed(evt);
             }
         });
 
@@ -126,24 +126,22 @@ public class LoginGUI extends javax.swing.JFrame {
         ViewController.GetInstance().CloseApplication();
     }//GEN-LAST:event_btnExitActionPerformed
 
-    
     /**
      * Called when the "Login" button is pressed.
      * @param evt 
      */
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         CheckLogin();
+        ViewController.GetInstance().OpenNewAndClose(new MainGUI(), this);
     }//GEN-LAST:event_btnLoginActionPerformed
-    
-    /**
-     * Called when a key is pressed on the LoginGUI
-    */
-    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+
+    private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             CheckLogin();
+            ViewController.GetInstance().OpenNewAndClose(new MainGUI(), this);
         }
-    }//GEN-LAST:event_formKeyPressed
-
+    }//GEN-LAST:event_txtPasswordKeyPressed
+    
     private boolean CheckLogin() {
         LoginAuth login = new LoginAuth();
         return login.CheckUsername(this.txtUsername.getText()) && login.CheckPassword(this.txtPassword.getPassword());
@@ -178,6 +176,7 @@ public class LoginGUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new LoginGUI().setVisible(true);
             }

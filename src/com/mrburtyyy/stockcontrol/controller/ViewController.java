@@ -38,12 +38,25 @@ public class ViewController implements IViewController {
 
     @Override
     public void OpenWindow(JFrame open) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        open.setVisible(true);
     }
 
     @Override
     public void CloseWindow(JFrame close) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        close.setVisible(false);
+    }
+    
+    @Override
+    public int CloseWindowAndDispose(JFrame close) {
+        try {
+            close.setVisible(false);
+            close.dispose();
+            return 0;
+        }
+        catch (NullPointerException ex) {
+            System.out.println(ex.toString());
+            return 1;
+        }        
     }
     
     /**

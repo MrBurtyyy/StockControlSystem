@@ -21,4 +21,6 @@ public interface IViewController {
     
     void CloseApplication();
     
+    int CloseWindowAndDispose(JFrame close);
+    
 }

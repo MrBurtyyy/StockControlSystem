@@ -22,6 +22,13 @@ public class ViewController implements IViewController {
         
     }
     
+    /**
+     * Follows the singleton pattern, and creates a
+     * new instance of the object if there is not one
+     * currently in the system, then returns the instance
+     * of the object.
+     * @return 
+     */
     public static ViewController GetInstance() {
         if (instance == null) {
             instance = new ViewController();
@@ -29,23 +36,44 @@ public class ViewController implements IViewController {
         
         return instance;
     }
-
+    
+    /**
+     * Opens a new window and sets it to visible,
+     * and closes the old window by making it not
+     * visible.
+     * @param open
+     * @param close 
+     */
     @Override
     public void OpenNewAndClose(JFrame open, JFrame close) {
         open.setVisible(true);
         close.setVisible(false);
     }
 
+    /**
+     * Opens a new window and sets it to be visible.
+     * @param open 
+     */
     @Override
     public void OpenWindow(JFrame open) {
         open.setVisible(true);
     }
-
+    
+    /**
+     * Closes a window by hiding it, but does
+     * not dispose of the object.
+     * @param close 
+     */
     @Override
     public void CloseWindow(JFrame close) {
         close.setVisible(false);
     }
     
+    /**
+     * Closes the window and disposes of the object.
+     * @param close
+     * @return 
+     */
     @Override
     public int CloseWindowAndDispose(JFrame close) {
         try {

@@ -11,7 +11,7 @@ import java.util.Arrays;
  *
  * @author Alex
  */
-public class LoginAuth implements ILoginAuth {
+public class LoginAuthController implements ILoginAuthController {
 
     @Override
     public boolean CheckUsername(String username) {

@@ -6,9 +6,10 @@
 
 package com.mrburtyyy.stockcontrol.view;
 
-import com.mrburtyyy.stockcontrol.controller.LoginAuth;
+import com.mrburtyyy.stockcontrol.controller.LoginAuthController;
 import com.mrburtyyy.stockcontrol.controller.ViewController;
 import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -131,20 +132,31 @@ public class LoginGUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        CheckLogin();
-        ViewController.GetInstance().OpenNewAndClose(new MainGUI(), this);
+        if (CheckLogin()) {
+            ViewController.GetInstance().OpenNewAndClose(new MainGUI(), this);
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            CheckLogin();
-            ViewController.GetInstance().OpenNewAndClose(new MainGUI(), this);
+            if (CheckLogin()) {
+                ViewController.GetInstance().OpenNewAndClose(new MainGUI(), this);
+            }
         }
     }//GEN-LAST:event_txtPasswordKeyPressed
     
     private boolean CheckLogin() {
-        LoginAuth login = new LoginAuth();
-        return login.CheckUsername(this.txtUsername.getText()) && login.CheckPassword(this.txtPassword.getPassword());
+        LoginAuthController login = new LoginAuthController();
+        if (login.CheckUsername(this.txtUsername.getText()) && login.CheckPassword(this.txtPassword.getPassword())) {
+            return true;
+        } else {
+            JOptionPane pane = new JOptionPane(
+                "Username/Password is incorrect",
+                JOptionPane.ERROR_MESSAGE,
+                JOptionPane.OK_OPTION);
+            pane.setVisible(true);
+            return false;
+        }
     }
     
     /**

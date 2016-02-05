@@ -9,7 +9,7 @@ package com.mrburtyyy.stockcontrol.controller;
  *
  * @author Alex
  */
-public interface ILoginAuth {
+public interface ILoginAuthController {
     
     public boolean CheckUsername(String username);
     

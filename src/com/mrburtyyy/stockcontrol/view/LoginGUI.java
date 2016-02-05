@@ -6,6 +6,7 @@
 
 package com.mrburtyyy.stockcontrol.view;
 
+import com.mrburtyyy.stockcontrol.controller.DBConnection;
 import com.mrburtyyy.stockcontrol.controller.LoginAuthController;
 import com.mrburtyyy.stockcontrol.controller.ViewController;
 import java.awt.event.KeyEvent;
@@ -24,6 +25,7 @@ public class LoginGUI extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        DBConnection.GetInstance().GetConnection();
     }
 
     /**

@@ -16,13 +16,23 @@ public class StockItem {
     private final String description;
     private int stockLevel;
     
+    
+    /**
+     * Sets the variables to their initial data.
+     * @param p1
+     * @param p2
+     * @param p3
+     * @param p4 
+     */
     public StockItem(int p1, String p2, String p3, int p4) {
         this.id = p1;
         this.name = p2;
         this.description = p3;
         this.stockLevel = p4;
     }
-
+    
+    // ACCESSOR METHODS
+    
     public String getName() {
         return name;
     }
@@ -38,5 +48,7 @@ public class StockItem {
     public void setStockLevel(int stockLevel) {
         this.stockLevel = stockLevel;
     }
+    
+    // END ACCESSOR METHODS
     
 }

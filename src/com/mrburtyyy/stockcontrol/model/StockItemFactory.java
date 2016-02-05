@@ -13,12 +13,11 @@ import java.util.ArrayList;
  */
 public class StockItemFactory {
     
-    private ArrayList stockList;
-    
+    private ArrayList stockList;    
     
     /**
      * Default constructor
-     * init the item list
+     * Initialises the ArrayList holding the item objects     
      */
     public StockItemFactory() {
         stockList = new ArrayList();
@@ -35,7 +34,17 @@ public class StockItemFactory {
      * @return 
      */
     public StockItem CreateStockItem(int id, String name, String description, int stockLevel) {
-        return new StockItem(id, name, description, stockLevel);
+        StockItem item = new StockItem(id, name, description, stockLevel);
+        stockList.add(item);
+        return item;
+    }
+    
+    /**
+     * Returns the stock list as an ArrayList
+     * @return
+     */
+    public ArrayList getStockList() {
+        return this.stockList;
     }
     
 }

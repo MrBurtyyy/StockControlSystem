@@ -150,11 +150,7 @@ public class LoginGUI extends javax.swing.JFrame {
         if (login.CheckUsername(this.txtUsername.getText()) && login.CheckPassword(this.txtPassword.getPassword())) {
             return true;
         } else {
-            JOptionPane pane = new JOptionPane(
-                "Username/Password is incorrect",
-                JOptionPane.ERROR_MESSAGE,
-                JOptionPane.OK_OPTION);
-            pane.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Username/Password are incorrect", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }

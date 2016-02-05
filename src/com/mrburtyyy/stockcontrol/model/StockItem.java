@@ -9,7 +9,7 @@ package com.mrburtyyy.stockcontrol.model;
  *
  * @author Alex
  */
-public class StockItem {
+public class StockItem implements IStockItem {
     
     private final int id;
     private final String name;
@@ -50,5 +50,19 @@ public class StockItem {
     }
     
     // END ACCESSOR METHODS
+    
+    /**
+     * Used to change the stock level of the item
+     * by passing in a value (either positive or negative)
+     * @param value 
+     */
+    @Override
+    public void ChangeStockLevel(int value) {
+        // Check to make sure the value isn't 0
+        if (value != 0) {
+            int newValue = this.getStockLevel() + value;
+            this.setStockLevel(newValue);
+        }
+    }
     
 }

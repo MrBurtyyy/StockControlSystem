@@ -27,16 +27,5 @@ public class LoginAuthControllerTest extends TestCase {
         // Check to make sure it returns FALSE when passing in the wrong username
         assertFalse(new LoginAuthController().CheckUsername("MrsBurtyyy"));        
     }
-
-    /**
-     * Test of CheckPassword method, of class LoginAuthController.
-     */
-    public void testCheckPassword() {
-        System.out.println("* LoginAuthControllerTest: testCheckPassword()");
-        // Check to make sure it returns TRUE when passing in the correct password
-        assertTrue(new LoginAuthController().CheckPassword("password".toCharArray()));
-        // Check to make sure it returns FALSE when passing in the wrong password
-        assertFalse(new LoginAuthController().CheckPassword("notpassword".toCharArray()));
-    }
     
 }

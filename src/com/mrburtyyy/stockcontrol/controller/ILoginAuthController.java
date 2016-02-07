@@ -13,6 +13,6 @@ public interface ILoginAuthController {
     
     public boolean CheckUsername(String username);
     
-    public boolean CheckPassword(char[] password);   
+    public boolean CheckPassword(String hash, String salt, String passwordToCheck, int iterations);   
     
 }

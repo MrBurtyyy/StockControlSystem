@@ -149,7 +149,7 @@ public class LoginGUI extends javax.swing.JFrame {
     
     private boolean CheckLogin() {
         LoginAuthController login = new LoginAuthController();
-        if (login.CheckUsername(this.txtUsername.getText()) && login.CheckPassword(this.txtPassword.getPassword())) {
+        if (login.VerifyLogin(this.txtUsername.getText(), this.txtPassword.getPassword())) {
             return true;
         } else {
             JOptionPane.showMessageDialog(this, "Username/Password are incorrect", "Error", JOptionPane.ERROR_MESSAGE);

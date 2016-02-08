@@ -10,9 +10,9 @@ package com.mrburtyyy.stockcontrol.controller;
  * @author Alex
  */
 public interface ILoginAuthController {
+        
+    public boolean CheckPassword(String hash, String salt, String passwordToCheck, int iterations);
     
-    public boolean CheckUsername(String username);
-    
-    public boolean CheckPassword(String hash, String salt, String passwordToCheck, int iterations);   
+    public boolean VerifyLogin(String usernameToCheck, char[] passwordToCheck);
     
 }

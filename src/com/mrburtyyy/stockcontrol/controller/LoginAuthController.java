@@ -22,11 +22,6 @@ import javax.crypto.spec.PBEKeySpec;
 public class LoginAuthController implements ILoginAuthController {
 
     @Override
-    public boolean CheckUsername(String username) {
-        return "MrBurtyyy".equals(username);
-    }
-
-    @Override
     public boolean CheckPassword(String hash, String salt, String passwordToCheck, int iterations) {
         try {
             SecretKeyFactory skf = SecretKeyFactory.getInstance( "PBKDF2WithHmacSHA1" );
@@ -46,7 +41,8 @@ public class LoginAuthController implements ILoginAuthController {
         return false;
     }
     
-    public boolean VerifyLogin(String usernameToCheck, char[] passwordToCheck) {
+    @Override
+    public boolean VerifyLogin(String usernameToCheck, char[] passwordToCheck) {        
         PreparedStatement getAdmins = null;
         String selectStatement = "SELECT Username, HashValue, Salt, Iterations FROM Admin WHERE Username = ?";
         String HashValue = null, Salt = null;

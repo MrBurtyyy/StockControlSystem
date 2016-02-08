@@ -54,6 +54,12 @@ public class LoginGUI extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Password:");
 
+        txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUsernameKeyPressed(evt);
+            }
+        });
+
         btnExit.setText("Exit");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,6 +145,11 @@ public class LoginGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    
+    /**
+     * Check for a key press when the user is in the txtPassword field.
+     * @param evt 
+     */
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (CheckLogin()) {
@@ -146,15 +157,47 @@ public class LoginGUI extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_txtPasswordKeyPressed
+
+    /**
+     * Checks for a key press when the user is in the txtUserName field.
+     * @param evt 
+     */
+    private void txtUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (CheckLogin()) {
+                ViewController.GetInstance().OpenNewAndClose(new MainGUI(), this);
+            }
+        }
+    }//GEN-LAST:event_txtUsernameKeyPressed
     
-    private boolean CheckLogin() {
+    /**
+     * Checks to see if either of the text fields are empty.
+     * @return 
+     */
+    public boolean CheckFieldsNotEmpty() {
+        return "".equals(this.txtUsername.getText()) || this.txtPassword.getPassword() == "".toCharArray();          
+    }    
+    
+    /**
+     * Checks the username and password that the user has entered.
+     * @return 
+     */
+    private boolean CheckLogin() {        
         LoginAuthController login = new LoginAuthController();
-        if (login.VerifyLogin(this.txtUsername.getText(), this.txtPassword.getPassword())) {
+        if (CheckFieldsNotEmpty() && login.VerifyLogin(this.txtUsername.getText(), this.txtPassword.getPassword())) {
             return true;
         } else {
-            JOptionPane.showMessageDialog(this, "Username/Password are incorrect", "Error", JOptionPane.ERROR_MESSAGE);
+            ShowErrorMessage("Username/Password is incorrect");
             return false;
         }
+    }
+    
+    /**
+     * Shows an error message using the JOptionPane.
+     * @param errorMessage 
+     */
+    private void ShowErrorMessage(String errorMessage) {
+        JOptionPane.showMessageDialog(this, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
     }
     
     /**

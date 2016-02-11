@@ -14,11 +14,13 @@ public final class DBConnection {
     
     private static DBConnection instance = null;
     private Connection conn = null;
-    protected String username = "root";
-    protected String password = "your_password";
     
     public DBConnection() {
-        GetConnection();
+        try {
+            GetConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public static DBConnection GetInstance() {
@@ -28,8 +30,8 @@ public final class DBConnection {
         return instance;
     }
     
-    public Connection GetConnection() {
-        if (conn == null) {
+    public Connection GetConnection() throws SQLException {
+        if (conn == null || !conn.isValid(100)) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommerce", "root", "");

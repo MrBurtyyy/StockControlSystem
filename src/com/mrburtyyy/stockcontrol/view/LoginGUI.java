@@ -10,6 +10,9 @@ import com.mrburtyyy.stockcontrol.controller.DBConnection;
 import com.mrburtyyy.stockcontrol.controller.LoginAuthController;
 import com.mrburtyyy.stockcontrol.controller.ViewController;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,7 +28,11 @@ public class LoginGUI extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        DBConnection.GetInstance().GetConnection();
+        try {
+            DBConnection.GetInstance().GetConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -184,7 +191,7 @@ public class LoginGUI extends javax.swing.JFrame {
      */
     private boolean CheckLogin() {        
         LoginAuthController login = new LoginAuthController();
-        if (CheckFieldsNotEmpty() && login.VerifyLogin(this.txtUsername.getText(), this.txtPassword.getPassword())) {
+        if (login.VerifyLogin(this.txtUsername.getText(), this.txtPassword.getPassword())) {
             return true;
         } else {
             ShowErrorMessage("Username/Password is incorrect");

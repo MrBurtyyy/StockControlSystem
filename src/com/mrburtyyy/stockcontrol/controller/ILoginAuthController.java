@@ -5,13 +5,20 @@
  */
 package com.mrburtyyy.stockcontrol.controller;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 /**
  *
  * @author Alex
  */
 public interface ILoginAuthController {
-        
-    public boolean CheckPassword(String hash, String salt, String passwordToCheck, int iterations);
+    
+    public boolean validatePassword(String password, String correctHash)
+            throws NoSuchAlgorithmException, InvalidKeySpecException;
+    
+    public boolean validatePassword(char[] password, String correctHash)
+            throws NoSuchAlgorithmException, InvalidKeySpecException;
     
     public boolean VerifyLogin(String usernameToCheck, char[] passwordToCheck);
     

@@ -102,13 +102,10 @@ public class LoginAuthController implements ILoginAuthController {
         String[] params = correctHash.split(":");
         int iterations = Integer.parseInt(params[ITERATION_INDEX]);
         byte[] salt = fromHex(params[SALT_INDEX]);
-        System.out.println(salt.toString());
         byte[] hash = fromHex(params[PBKDF2_INDEX]);
-        System.out.println(hash.toString());
         // Compute the hash of the provided password, using the same salt, 
         // iteration count, and hash length
         byte[] testHash = pbkdf2(password, salt, iterations, hash.length);
-        System.out.println(testHash.toString());
         // Compare the hashes in constant time. The password is correct if
         // both hashes match.
         return slowEquals(hash, testHash);
@@ -205,18 +202,9 @@ public class LoginAuthController implements ILoginAuthController {
             while (rs.next()) {
                 String username = rs.getString("Username");
                 if (username.equals(usernameToCheck)) {
-                    HashValue = rs.getString("HashValue");
-                    Salt = rs.getString("Salt");
-                    Iterations = rs.getInt("Iterations");
-                    System.out.println(HashValue);
-                    System.out.println(Salt);
-                    System.out.println(Iterations);
-                    break;
+                    return validatePassword(passwordToCheck, rs.getString("HashValue"));
                 }
-            }
-            
-            System.out.println(validatePassword(Arrays.toString(passwordToCheck), (Iterations + ":" + Salt + ":" + HashValue)));
-            return validatePassword(Arrays.toString(passwordToCheck), (Iterations + ":" + Salt + ":" + HashValue));            
+            }            
             
         } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException ex) {
             Logger.getLogger(LoginAuthController.class.getName()).log(Level.SEVERE, null, ex);

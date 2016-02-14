@@ -6,6 +6,8 @@
 package com.mrburtyyy.stockcontrol.view;
 
 import com.mrburtyyy.stockcontrol.controller.ViewController;
+import com.mrburtyyy.stockcontrol.model.StockItemFactory;
+import com.mrburtyyy.stockcontrol.model.StockItemTableModel;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 
@@ -13,13 +15,28 @@ import javax.swing.JFrame;
  *
  * @author Alex
  */
-public class MainGUI extends javax.swing.JFrame {
+public class StockGUI extends javax.swing.JFrame {
+    
+    StockItemTableModel tm;
 
     /**
      * Creates new form MainGUI
      */
-    public MainGUI() {
+    public StockGUI() {
         initComponents();
+        this.SetFullscreen();
+        this.ShowItems();
+    }
+    
+    private void ShowItems() {
+        tm = new StockItemTableModel(new StockItemFactory().updateStockList());
+        this.mainTable.setModel(tm);
+    }
+    
+    /**
+     * Set the form to fullscreen.
+     */
+    private void SetFullscreen() {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
         this.setMaximizedBounds(env.getMaximumWindowBounds());
@@ -116,21 +133,22 @@ public class MainGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StockGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StockGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StockGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StockGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new MainGUI().setVisible(true);
+                new StockGUI().setVisible(true);
             }
         });
     }

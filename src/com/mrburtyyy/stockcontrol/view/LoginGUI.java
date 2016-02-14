@@ -148,11 +148,10 @@ public class LoginGUI extends javax.swing.JFrame {
      */
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         if (CheckLogin()) {
-            ViewController.GetInstance().OpenNewAndClose(new MainGUI(), this);
+            ViewController.GetInstance().OpenNewAndClose(new StockGUI(), this);
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    
     /**
      * Check for a key press when the user is in the txtPassword field.
      * @param evt 
@@ -160,7 +159,7 @@ public class LoginGUI extends javax.swing.JFrame {
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (CheckLogin()) {
-                ViewController.GetInstance().OpenNewAndClose(new MainGUI(), this);
+                ViewController.GetInstance().OpenNewAndClose(new StockGUI(), this);
             }
         }
     }//GEN-LAST:event_txtPasswordKeyPressed
@@ -172,7 +171,7 @@ public class LoginGUI extends javax.swing.JFrame {
     private void txtUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (CheckLogin()) {
-                ViewController.GetInstance().OpenNewAndClose(new MainGUI(), this);
+                ViewController.GetInstance().OpenNewAndClose(new StockGUI(), this);
             }
         }
     }//GEN-LAST:event_txtUsernameKeyPressed

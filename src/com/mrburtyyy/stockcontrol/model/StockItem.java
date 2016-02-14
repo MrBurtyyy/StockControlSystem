@@ -9,60 +9,78 @@ package com.mrburtyyy.stockcontrol.model;
  *
  * @author Alex
  */
-public class StockItem implements IStockItem {
+public class StockItem {
     
-    private final int id;
-    private final String name;
-    private final String description;
-    private int stockLevel;
-    
+    private final int ID;
+    private final String Make;
+    private final String Model;
+    private final String Description;
+    private float Price;
+    private int StockLevel;
+    private final String ImageLink;    
     
     /**
-     * Sets the variables to their initial data.
-     * @param p1
-     * @param p2
-     * @param p3
-     * @param p4 
+     * Sets the variables to their initial data. 
+     * @param ID
+     * @param Make
+     * @param Model
+     * @param Description
+     * @param Price
+     * @param StockLevel
+     * @param ImageLink
      */
-    public StockItem(int p1, String p2, String p3, int p4) {
-        this.id = p1;
-        this.name = p2;
-        this.description = p3;
-        this.stockLevel = p4;
+    public StockItem(int ID, String Make, String Model, String Description, float Price, int StockLevel, String ImageLink) {
+        this.ID = ID;
+        this.Make = Make;
+        this.Model = Model;
+        this.Description = Description;
+        this.Price = Price;
+        this.StockLevel = StockLevel;
+        this.ImageLink = ImageLink;    }
+    
+        
+    // <editor-fold defaultstate="collapsed" desc="Mutator Methods">
+
+    /**
+     *
+     * @return
+     */
+    public float getPrice() {
+        return Price;
     }
-    
-    // ACCESSOR METHODS
-    
-    public String getName() {
-        return name;
-    }
-    
-    public String getDescription() {
-        return description;
+
+    public void setPrice(float Price) {
+        this.Price = Price;
     }
 
     public int getStockLevel() {
-        return stockLevel;
+        return StockLevel;
     }
 
-    public void setStockLevel(int stockLevel) {
-        this.stockLevel = stockLevel;
+    public void setStockLevel(int StockLevel) {
+        this.StockLevel = StockLevel;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public String getMake() {
+        return Make;
+    }
+
+    public String getModel() {
+        return Model;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public String getImageLink() {
+        return ImageLink;
     }
     
-    // END ACCESSOR METHODS
-    
-    /**
-     * Used to change the stock level of the item
-     * by passing in a value (either positive or negative)
-     * @param value 
-     */
-    @Override
-    public void ChangeStockLevel(int value) {
-        // Check to make sure the value isn't 0
-        if (value != 0) {
-            int newValue = this.getStockLevel() + value;
-            this.setStockLevel(newValue);
-        }
-    }
+    // </editor-fold>
     
 }

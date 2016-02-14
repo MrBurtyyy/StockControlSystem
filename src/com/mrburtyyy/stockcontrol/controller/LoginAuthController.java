@@ -209,8 +209,7 @@ public class LoginAuthController implements ILoginAuthController {
         } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException ex) {
             Logger.getLogger(LoginAuthController.class.getName()).log(Level.SEVERE, null, ex);
         }        
-        return false;
-        
+        return false;        
     }
     
 }

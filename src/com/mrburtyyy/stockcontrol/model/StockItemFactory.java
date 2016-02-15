@@ -31,7 +31,6 @@ public class StockItemFactory {
     }
     
     /**
-     * NEEDS TO BE UPDATED
      * Creates a new StockItem and adds it to the
      * stockList
      * @param ID
@@ -58,8 +57,7 @@ public class StockItemFactory {
     }
     
     public ArrayList updateStockList() {
-        PreparedStatement getStock = null;
-        String selectStatement = "SELECT StockID, Make, Model, Price, Description, StockLevel FROM stockitems";
+        String selectStatement = "SELECT StockID, Make, Model, Price, Description, StockLevel, ImageLink FROM stockitems";
         int ID, StockLevel;
         String Model, Make, Description, ImageLink;
         float Price;
@@ -67,13 +65,13 @@ public class StockItemFactory {
         
         try {
             Connection conn = DBConnection.GetInstance().GetConnection();
-            getStock = conn.prepareStatement(selectStatement);
+            PreparedStatement getStock = conn.prepareStatement(selectStatement);
             
             // Execute select SQL statement
             ResultSet rs = getStock.executeQuery();
             
             while (rs.next()) {
-                ID = rs.getInt("ID");
+                ID = rs.getInt("StockID");
                 Make = rs.getString("Make");
                 Model = rs.getString("Model");
                 Description = rs.getString("Description");

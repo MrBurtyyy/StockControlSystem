@@ -1,5 +1,6 @@
 package com.mrburtyyy.stockcontrol.controller;
 
+import com.mrburtyyy.stockcontrol.orm.Admin;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -13,12 +14,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
  * @author Alex
  */
 public class LoginAuthController implements ILoginAuthController {
+    
+    private static EntityManager em;
 
     public static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
 
@@ -185,31 +192,52 @@ public class LoginAuthController implements ILoginAuthController {
      * @return
      */
     @Override
-    public boolean VerifyLogin(String usernameToCheck, char[] passwordToCheck) {        
-        PreparedStatement getAdmins = null;
-        String selectStatement = "SELECT Username, HashValue, Salt, Iterations FROM Admin WHERE Username = ?";
-        String HashValue = null, Salt = null;
-        int Iterations = 0;
+    public boolean VerifyLogin(String usernameToCheck, char[] passwordToCheck) {
         
-        try {
-            Connection conn = DBConnection.GetInstance().GetConnection();
-            getAdmins = conn.prepareStatement(selectStatement);
-            getAdmins.setString(1, usernameToCheck);
-            
-            // Execute select SQL statement
-            ResultSet rs = getAdmins.executeQuery();
-            
-            while (rs.next()) {
-                String username = rs.getString("Username");
-                if (username.equals(usernameToCheck)) {
-                    return validatePassword(passwordToCheck, rs.getString("HashValue"));
-                }
-            }            
-            
-        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException ex) {
-            Logger.getLogger(LoginAuthController.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-        return false;        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("StockControlSystemPU");
+        em = emf.createEntityManager();
+        
+        Query q = em.createQuery("SELECT a FROM Admin a WHERE a.username = :userName");
+        q.setParameter("userName", usernameToCheck);
+        
+        Admin admin = (Admin) q.getSingleResult();
+        
+        if (usernameToCheck.equals(admin.getUsername())) {
+            try {
+                return validatePassword(passwordToCheck, admin.getHashValue());
+            } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+                Logger.getLogger(LoginAuthController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return false;
+        
+        
+        
+//        PreparedStatement getAdmins = null;
+//        String selectStatement = "SELECT Username, HashValue, Salt, Iterations FROM Admin WHERE Username = ?";
+//        String HashValue = null, Salt = null;
+//        int Iterations = 0;
+//        
+//        try {
+//            Connection conn = DBConnection.GetInstance().GetConnection();
+//            getAdmins = conn.prepareStatement(selectStatement);
+//            getAdmins.setString(1, usernameToCheck);
+//            
+//            // Execute select SQL statement
+//            ResultSet rs = getAdmins.executeQuery();
+//            
+//            while (rs.next()) {
+//                String username = rs.getString("Username");
+//                if (username.equals(usernameToCheck)) {
+//                    return validatePassword(passwordToCheck, rs.getString("HashValue"));
+//                }
+//            }            
+//            
+//        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException ex) {
+//            Logger.getLogger(LoginAuthController.class.getName()).log(Level.SEVERE, null, ex);
+//        }        
+//        return false;        
     }
     
 }

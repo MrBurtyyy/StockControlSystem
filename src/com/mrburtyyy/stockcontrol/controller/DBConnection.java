@@ -5,28 +5,51 @@
  */
 package com.mrburtyyy.stockcontrol.controller;
 
+import com.mrburtyyy.stockcontrol.orm.Item;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
 /**
  *
  * @author Alex
  */
-public class DBConnection implements Runnable {
+public class DBConnection {    
     
-    private Thread t;
-    private final String threadName;
-    
-    public static final DBConnection instance = new DBConnection();
+    private static DBConnection instance = null;    
+    private static EntityManagerFactory emf;
     
     public DBConnection() {
-        
+        emf = Persistence.createEntityManagerFactory("StockControlSystemPU");
     }
     
-    public DBConnection GetInstance() {
+    public static DBConnection GetInstance() {
+        if (instance == null) {
+            instance = new DBConnection();
+        }
         return instance;
     }
-
-    @Override
-    public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public Item FindItemByModel(String itemModel) {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Item> q = em.createNamedQuery("Item.findByModel", Item.class);
+        q.setParameter("model", itemModel);
+        return q.getSingleResult();
+    }
+    
+    public Item FindItemByID(int itemID) {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Item> q = em.createNamedQuery("Item.findByStockID", Item.class);
+        q.setParameter("stockID", itemID);
+        return q.getSingleResult();
+    }
+    
+    public List<Item> FindAllItems() {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Item> q = em.createNamedQuery("Item.findAll", Item.class);
+        return q.getResultList();
     }
     
 }

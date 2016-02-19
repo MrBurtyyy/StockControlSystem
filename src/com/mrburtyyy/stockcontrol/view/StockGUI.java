@@ -5,6 +5,7 @@
  */
 package com.mrburtyyy.stockcontrol.view;
 
+import com.mrburtyyy.stockcontrol.controller.DBConnection;
 import com.mrburtyyy.stockcontrol.controller.ItemController;
 import com.mrburtyyy.stockcontrol.controller.ViewController;
 import com.mrburtyyy.stockcontrol.model.StockItemTableModel;
@@ -29,7 +30,7 @@ public class StockGUI extends javax.swing.JFrame {
     }
     
     private void UpdateItems() {
-        tm = new StockItemTableModel(new ItemController().updateInformation());
+        tm = new StockItemTableModel(DBConnection.GetInstance().FindAllItems());
         this.mainTable.setModel(tm);
     }
     

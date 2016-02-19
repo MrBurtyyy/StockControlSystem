@@ -1,50 +1,32 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.mrburtyyy.stockcontrol.controller;
-
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Alex
  */
-public final class DBConnection {
+public class DBConnection implements Runnable {
     
-    private static DBConnection instance = null;
-    private Connection conn = null;
+    private Thread t;
+    private final String threadName;
+    
+    public static final DBConnection instance = new DBConnection();
     
     public DBConnection() {
-        try {
-            GetConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
     
-    public static DBConnection GetInstance() {
-        if (instance == null) {
-            instance = new DBConnection();
-        }
+    public DBConnection GetInstance() {
         return instance;
     }
-    
-    public Connection GetConnection() throws SQLException {
-        if (conn == null || !conn.isValid(100)) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommerce", "root", "");
-                System.out.println("Connection has been made to database!");
-            } catch (SQLException ex) {
-                System.out.println("Database connection error: " + ex.toString());
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return conn;
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
     
 }

@@ -5,7 +5,7 @@
  */
 package com.mrburtyyy.stockcontrol.model;
 
-import java.util.ArrayList;
+import com.mrburtyyy.stockcontrol.orm.Item;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -17,9 +17,9 @@ public class StockItemTableModel extends AbstractTableModel {
     
     private final String[] columnNames = { "ID", "Make", "Model", "Description", "Price", "# Remaining" };
     
-    private final List<StockItem> data;
+    private final List<Item> data;
     
-    public StockItemTableModel(ArrayList items) {
+    public StockItemTableModel(List<Item> items) {
         this.data = items;
     }
     
@@ -36,10 +36,10 @@ public class StockItemTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object value = "??";
-        StockItem item = data.get(rowIndex);
+        Item item = data.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                value = item.getID();
+                value = item.getStockID();
                 break;
             case 1:
                 value = item.getMake();
@@ -71,7 +71,7 @@ public class StockItemTableModel extends AbstractTableModel {
         return getValueAt(0, col).getClass();
     }
         
-    public StockItem getItemAt(int row) {
+    public Item getItemAt(int row) {
         return data.get(row);
     }
     

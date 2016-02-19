@@ -5,8 +5,8 @@
  */
 package com.mrburtyyy.stockcontrol.view;
 
+import com.mrburtyyy.stockcontrol.controller.ItemController;
 import com.mrburtyyy.stockcontrol.controller.ViewController;
-import com.mrburtyyy.stockcontrol.model.StockItemFactory;
 import com.mrburtyyy.stockcontrol.model.StockItemTableModel;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
@@ -25,11 +25,11 @@ public class StockGUI extends javax.swing.JFrame {
     public StockGUI() {
         initComponents();
         this.SetFullscreen();
-        this.ShowItems();
+        this.UpdateItems();
     }
     
-    private void ShowItems() {
-        tm = new StockItemTableModel(new StockItemFactory().updateStockList());
+    private void UpdateItems() {
+        tm = new StockItemTableModel(new ItemController().updateInformation());
         this.mainTable.setModel(tm);
     }
     

@@ -5,10 +5,6 @@ import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -186,14 +182,12 @@ public class LoginAuthController implements ILoginAuthController {
     }
     
     /**
-     *
      * @param usernameToCheck
      * @param passwordToCheck
      * @return
      */
     @Override
-    public boolean VerifyLogin(String usernameToCheck, char[] passwordToCheck) {
-        
+    public boolean VerifyLogin(String usernameToCheck, char[] passwordToCheck) {        
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("StockControlSystemPU");
         em = emf.createEntityManager();
         
@@ -210,34 +204,7 @@ public class LoginAuthController implements ILoginAuthController {
             }
         }
         
-        return false;
-        
-        
-        
-//        PreparedStatement getAdmins = null;
-//        String selectStatement = "SELECT Username, HashValue, Salt, Iterations FROM Admin WHERE Username = ?";
-//        String HashValue = null, Salt = null;
-//        int Iterations = 0;
-//        
-//        try {
-//            Connection conn = DBConnection.GetInstance().GetConnection();
-//            getAdmins = conn.prepareStatement(selectStatement);
-//            getAdmins.setString(1, usernameToCheck);
-//            
-//            // Execute select SQL statement
-//            ResultSet rs = getAdmins.executeQuery();
-//            
-//            while (rs.next()) {
-//                String username = rs.getString("Username");
-//                if (username.equals(usernameToCheck)) {
-//                    return validatePassword(passwordToCheck, rs.getString("HashValue"));
-//                }
-//            }            
-//            
-//        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException ex) {
-//            Logger.getLogger(LoginAuthController.class.getName()).log(Level.SEVERE, null, ex);
-//        }        
-//        return false;        
+        return false;        
     }
     
 }

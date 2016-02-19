@@ -6,13 +6,9 @@
 
 package com.mrburtyyy.stockcontrol.view;
 
-import com.mrburtyyy.stockcontrol.controller.DBConnection;
 import com.mrburtyyy.stockcontrol.controller.LoginAuthController;
 import com.mrburtyyy.stockcontrol.controller.ViewController;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,13 +22,12 @@ public class LoginGUI extends javax.swing.JFrame {
      */
     public LoginGUI() {
         initComponents();
+        this.CenterAndShow();
+    }
+    
+    public final void CenterAndShow() {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        try {
-            DBConnection.GetInstance().GetConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     /**

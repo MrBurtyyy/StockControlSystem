@@ -14,5 +14,12 @@
         <libraries xmlns="http://www.netbeans.org/ns/ant-project-libraries/1">
             <definitions>.\lib\nblibraries.properties</definitions>
         </libraries>
+        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>fullscreen</word>
+            <word>gui</word>
+            <word>http</word>
+            <word>stackoverflow</word>
+            <word>taskbar</word>
+        </spellchecker-wordlist>
     </configuration>
 </project>

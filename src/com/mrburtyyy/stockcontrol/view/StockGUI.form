@@ -232,11 +232,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Apply Filter"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="filterAcceptButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="filterResetButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Reset Filters"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="filterResetButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

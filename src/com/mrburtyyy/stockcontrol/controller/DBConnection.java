@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -30,6 +31,14 @@ public class DBConnection {
             instance = new DBConnection();
         }
         return instance;
+    }
+    
+    public EntityManagerFactory GetEntityManagerFactory() {
+        return emf;
+    }
+    
+    public List<Item> ExecuteQuery(Query query) {
+        return query.getResultList();
     }
     
     public Item FindItemByModel(String itemModel) {

@@ -46,7 +46,7 @@ public class FilterSystemController {
         ArrayList priceList = new ArrayList();
         priceList.add("No Filter");
         priceList.add("Less than £50");
-        priceList.add("£51-£150");
+        priceList.add("£50-£150");
         priceList.add("£151 - £250");
         priceList.add("£251 - £350");
         priceList.add("Greater than £350");

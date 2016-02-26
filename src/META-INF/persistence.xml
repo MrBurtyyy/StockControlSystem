@@ -4,6 +4,8 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.mrburtyyy.stockcontrol.orm.Admin</class>
     <class>com.mrburtyyy.stockcontrol.orm.Item</class>
+    <class>com.mrburtyyy.stockcontrol.orm.Item_1</class>
+    <class>com.mrburtyyy.stockcontrol.orm.Admin_1</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ecommerce?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

@@ -23,11 +23,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(catalog = "ecommerce", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"StockID"})})
+    @UniqueConstraint(columnNames = {"ItemID"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i"),
-    @NamedQuery(name = "Item.findByStockID", query = "SELECT i FROM Item i WHERE i.stockID = :stockID"),
+    @NamedQuery(name = "Item.findByItemID", query = "SELECT i FROM Item i WHERE i.itemID = :itemID"),
     @NamedQuery(name = "Item.findByMake", query = "SELECT i FROM Item i WHERE i.make = :make"),
     @NamedQuery(name = "Item.findByModel", query = "SELECT i FROM Item i WHERE i.model = :model"),
     @NamedQuery(name = "Item.findByPrice", query = "SELECT i FROM Item i WHERE i.price = :price"),
@@ -39,7 +39,7 @@ public class Item implements Serializable {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @Column(nullable = false)
-    private int stockID;
+    private int itemID;
     @Basic(optional = false)
     @Column(nullable = false, length = 255)
     private String make;
@@ -68,9 +68,9 @@ public class Item implements Serializable {
         this.model = model;
     }
 
-    public Item(String model, int stockID, String make, BigDecimal price, String description, int stockLevel, String imageLink) {
+    public Item(String model, int itemID, String make, BigDecimal price, String description, int stockLevel, String imageLink) {
         this.model = model;
-        this.stockID = stockID;
+        this.itemID = itemID;
         this.make = make;
         this.price = price;
         this.description = description;
@@ -78,12 +78,12 @@ public class Item implements Serializable {
         this.imageLink = imageLink;
     }
 
-    public int getStockID() {
-        return stockID;
+    public int getItemID() {
+        return itemID;
     }
 
-    public void setStockID(int stockID) {
-        this.stockID = stockID;
+    public void setItemID(int itemID) {
+        this.itemID = itemID;
     }
 
     public String getMake() {

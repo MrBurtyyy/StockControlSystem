@@ -39,7 +39,7 @@ public class StockItemTableModel extends AbstractTableModel {
         Item item = data.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                value = item.getStockID();
+                value = item.getItemID();
                 break;
             case 1:
                 value = item.getMake();

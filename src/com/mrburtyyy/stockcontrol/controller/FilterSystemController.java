@@ -14,15 +14,16 @@ import java.util.List;
  * @author Alex
  */
 public class FilterSystemController {
-    
+
     public void FilterSystemController() {
-        
+
     }
-    
+
     /**
-     * Iterates through every item and adds one of each
-     * make into an ArrayList to be used in a ComboBox.
-     * @return 
+     * Iterates through every item and adds one of each make into an ArrayList
+     * to be used in a ComboBox.
+     *
+     * @return
      */
     public ArrayList GetMakes() {
         ArrayList itemMakes = new ArrayList();
@@ -33,14 +34,14 @@ public class FilterSystemController {
                 itemMakes.add(temp.getMake());
             }
         }
-        
+
         return itemMakes;
     }
-    
+
     /**
-     * Adds a set of strings into an ArrayList to be
-     * used in a ComboBox.
-     * @return 
+     * Adds a set of strings into an ArrayList to be used in a ComboBox.
+     *
+     * @return
      */
     public ArrayList GetPrices() {
         ArrayList priceList = new ArrayList();
@@ -52,11 +53,12 @@ public class FilterSystemController {
         priceList.add("Greater than £350");
         return priceList;
     }
-    
+
     /**
-     * Adds a set of strings into an ArrayList to be
-     * used in a ComboBox for the price filter.
-     * @return 
+     * Adds a set of strings into an ArrayList to be used in a ComboBox for the
+     * price filter.
+     *
+     * @return
      */
     public ArrayList GetStockLevel() {
         ArrayList stockLevelList = new ArrayList();
@@ -69,5 +71,5 @@ public class FilterSystemController {
         stockLevelList.add("Greater than 50");
         return stockLevelList;
     }
-    
+
 }

@@ -20,7 +20,7 @@ import javax.swing.ListSelectionModel;
  * @author Alex
  */
 public class StockGUI extends javax.swing.JFrame {
-    
+
     StockItemTableModel tm;
 
     /**
@@ -32,20 +32,19 @@ public class StockGUI extends javax.swing.JFrame {
         this.UpdateAllFilters();
         this.InitialiseTable();
     }
-    
+
     /**
-     * Performs the initial setup of the main JTable
-     * and adds all items into it from the database.
+     * Performs the initial setup of the main JTable and adds all items into it
+     * from the database.
      */
     private void InitialiseTable() {
         this.mainTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tm = new StockItemTableModel(DBConnection.GetInstance().FindAllItems());
         this.mainTable.setModel(tm);
     }
-    
+
     /**
-     * Updates all of the filter ComboBoxes to
-     * show correct filter items.
+     * Updates all of the filter ComboBoxes to show correct filter items.
      */
     private void UpdateAllFilters() {
         FilterSystemController fsc = new FilterSystemController();
@@ -53,7 +52,7 @@ public class StockGUI extends javax.swing.JFrame {
         priceComboBox.setModel(new DefaultComboBoxModel(fsc.GetPrices().toArray()));
         stockLevelComboBox.setModel(new DefaultComboBoxModel(fsc.GetStockLevel().toArray()));
     }
-    
+
     /**
      * Set the form to fullscreen.
      */
@@ -62,7 +61,7 @@ public class StockGUI extends javax.swing.JFrame {
         GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
         this.setMaximizedBounds(env.getMaximumWindowBounds());
     }
-    
+
     /**
      * Resets all of the filter ComboBoxes to 'No Filter' (index 0).
      */
@@ -235,7 +234,7 @@ public class StockGUI extends javax.swing.JFrame {
     private void filterAcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterAcceptButtonActionPerformed
         QueryStringBuilder qsb = new QueryStringBuilder(this.makeComboBox, this.priceComboBox, this.stockLevelComboBox);
         tm = new StockItemTableModel(DBConnection.GetInstance().ExecuteQuery(qsb.BuildQuery()));
-        this.mainTable.setModel(tm);        
+        this.mainTable.setModel(tm);
     }//GEN-LAST:event_filterAcceptButtonActionPerformed
 
     private void filterResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterResetButtonActionPerformed
@@ -243,7 +242,7 @@ public class StockGUI extends javax.swing.JFrame {
         this.mainTable.setModel(tm);
         this.ResetFilterComboBoxes();
     }//GEN-LAST:event_filterResetButtonActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */

@@ -98,6 +98,9 @@ public class StockGUI extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         menuFileClose = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        addItemMenuItem = new javax.swing.JMenuItem();
 
         jRadioButton1.setText("jRadioButton1");
 
@@ -163,7 +166,23 @@ public class StockGUI extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
+
+        jMenuItem1.setText("jMenuItem1");
+        jMenu2.add(jMenuItem1);
+
         jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Item");
+
+        addItemMenuItem.setText("Add new Item");
+        addItemMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addItemMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu3.add(addItemMenuItem);
+
+        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -243,6 +262,10 @@ public class StockGUI extends javax.swing.JFrame {
         this.ResetFilterComboBoxes();
     }//GEN-LAST:event_filterResetButtonActionPerformed
 
+    private void addItemMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemMenuItemActionPerformed
+        ViewController.GetInstance().OpenWindow(new AddNewItemGUI());
+    }//GEN-LAST:event_addItemMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -281,6 +304,7 @@ public class StockGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem addItemMenuItem;
     private javax.swing.JButton filterAcceptButton;
     private javax.swing.ButtonGroup filterButtonGroup;
     private javax.swing.JButton filterResetButton;
@@ -290,7 +314,9 @@ public class StockGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

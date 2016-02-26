@@ -6,6 +6,9 @@
     <class>com.mrburtyyy.stockcontrol.orm.Item</class>
     <class>com.mrburtyyy.stockcontrol.orm.Item_1</class>
     <class>com.mrburtyyy.stockcontrol.orm.Admin_1</class>
+    <class>com.mrburtyyy.stockcontrol.orm.Customer</class>
+    <class>com.mrburtyyy.stockcontrol.orm.OrderItems</class>
+    <class>com.mrburtyyy.stockcontrol.orm.CustomerOrder</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ecommerce?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

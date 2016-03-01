@@ -53,7 +53,7 @@ public class DBConnection {
     }
 
     /**
-     * Executes a supplied query and returns a List<> of Objects that meet the
+     * Executes a supplied query and returns a List of Objects that meet the
      * criteria supplied in the Query.
      *
      * @param query

@@ -139,6 +139,8 @@ public class QueryStringBuilder {
         } else {
             queryString = "SELECT i FROM Item i WHERE" + getMakeFilter() + getPriceFilter() + getStockLevelFilter();
         }
+        
+        queryString += " ORDER BY i.itemID ASC";
 
         Query query = DBConnection.GetInstance().GetEntityManagerFactory().createEntityManager().createQuery(queryString, Item.class);
         return query;

@@ -116,7 +116,7 @@ public class DBConnection {
      * @param imageLink
      */
     public void AddItem(String make, int stockID, String model, BigDecimal price, String description, int stockLevel, String imageLink) {
-        Item item = new Item(make, stockID, model, price, description, stockLevel, imageLink);
+        Item item = new Item(model, stockID, make, price, description, stockLevel, imageLink);
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         try {

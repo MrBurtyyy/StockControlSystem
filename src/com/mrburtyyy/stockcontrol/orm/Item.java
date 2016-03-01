@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @UniqueConstraint(columnNames = {"ItemID"})})
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i"),
+    @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i ORDER BY i.itemID ASC"),
     @NamedQuery(name = "Item.findByItemID", query = "SELECT i FROM Item i WHERE i.itemID = :itemID"),
     @NamedQuery(name = "Item.findByMake", query = "SELECT i FROM Item i WHERE i.make = :make"),
     @NamedQuery(name = "Item.findByModel", query = "SELECT i FROM Item i WHERE i.model = :model"),

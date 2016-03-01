@@ -5,6 +5,10 @@
  */
 package com.mrburtyyy.stockcontrol.view;
 
+import com.mrburtyyy.stockcontrol.controller.DBConnection;
+import com.mrburtyyy.stockcontrol.controller.ViewController;
+import java.math.BigDecimal;
+
 /**
  *
  * @author Alex
@@ -49,7 +53,7 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
             return false;
         }
         
-        if ((Integer) priceSpinner.getValue() < 0) {
+        if ((Double) priceSpinner.getValue() < 0) {
             return false;
         }
         
@@ -108,6 +112,8 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Image Link:");
+
+        priceSpinner.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 1.0d));
 
         imageLinkTxt.setText("http://");
 
@@ -196,9 +202,17 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
+        // Check to see if all of the fields have been correctly filled in.
         if (!this.ValidateData()) {
-            
-        }
+            ViewController.GetInstance().ShowErrorMessage(this, "Validation failed on one or more fields!");
+        } else {
+            DBConnection.GetInstance().AddItem(makeTxt.getText(), DBConnection.GetInstance().GetLastItemID() + 1,
+                    modelTxt.getText(), BigDecimal.valueOf((Double) priceSpinner.getValue()), descriptionTxt.getText(), 
+                    (Integer) stockSpinner.getValue(), imageLinkTxt.getText());
+        }    
+        
+        // Close the AddNewItem GUI when the new Item has been added.
+        ViewController.GetInstance().CloseWindow(this);
     }//GEN-LAST:event_addItemButtonActionPerformed
 
     /**

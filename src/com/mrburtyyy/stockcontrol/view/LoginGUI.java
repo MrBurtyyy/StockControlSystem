@@ -188,17 +188,9 @@ public class LoginGUI extends javax.swing.JFrame {
         if (login.VerifyLogin(this.txtUsername.getText(), this.txtPassword.getPassword())) {
             return true;
         } else {
-            ShowErrorMessage("Username/Password is incorrect");
+            ViewController.GetInstance().ShowErrorMessage(this, "Username/Password is incorrect");
             return false;
         }
-    }
-    
-    /**
-     * Shows an error message using the JOptionPane.
-     * @param errorMessage 
-     */
-    private void ShowErrorMessage(String errorMessage) {
-        JOptionPane.showMessageDialog(this, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
     }
     
     /**

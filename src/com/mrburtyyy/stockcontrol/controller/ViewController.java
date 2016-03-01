@@ -8,7 +8,9 @@
 
 package com.mrburtyyy.stockcontrol.controller;
 
+import java.awt.Component;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,6 +37,15 @@ public class ViewController implements IViewController {
         }
         
         return instance;
+    }
+    
+    /**
+     * Shows an error message using the JOptionPane.
+     * @param comp
+     * @param errorMessage 
+     */
+    public void ShowErrorMessage(Component comp,String errorMessage) {
+        JOptionPane.showMessageDialog(comp, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
     }
     
     /**

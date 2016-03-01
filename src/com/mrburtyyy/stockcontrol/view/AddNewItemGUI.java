@@ -9,7 +9,7 @@ package com.mrburtyyy.stockcontrol.view;
  *
  * @author Alex
  */
-public class AddNewItemGUI extends javax.swing.JFrame {
+public final class AddNewItemGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form AddNewItemGUI
@@ -22,9 +22,38 @@ public class AddNewItemGUI extends javax.swing.JFrame {
     /**
      * Centres and sets the GUI to visible.
      */
-    public final void CenterAndShow() {
+    public void CenterAndShow() {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+    
+    /**
+     * Ensures that all of the data entered by the user
+     * is valid.
+     * @return 
+     */
+    public Boolean ValidateData() {
+        if ("".equals(makeTxt.getText())) {
+            return false;
+        }
+        
+        if ("".equals(modelTxt.getText())) {
+            return false;
+        }
+        
+        if ("".equals(descriptionTxt.getText())) {
+            return false;
+        }
+        
+        if ("".equals(imageLinkTxt.getText())) {
+            return false;
+        }
+        
+        if ((Integer) priceSpinner.getValue() < 0) {
+            return false;
+        }
+        
+        return (Integer) stockSpinner.getValue() >= 0;
     }
 
     /**
@@ -83,6 +112,11 @@ public class AddNewItemGUI extends javax.swing.JFrame {
         imageLinkTxt.setText("http://");
 
         addItemButton.setText("Add Item");
+        addItemButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addItemButtonActionPerformed(evt);
+            }
+        });
 
         cancelButton.setText("Cancel");
 
@@ -161,6 +195,12 @@ public class AddNewItemGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
+        if (!this.ValidateData()) {
+            
+        }
+    }//GEN-LAST:event_addItemButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -190,6 +230,7 @@ public class AddNewItemGUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new AddNewItemGUI().setVisible(true);
             }

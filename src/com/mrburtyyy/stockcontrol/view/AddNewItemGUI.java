@@ -6,14 +6,18 @@
 package com.mrburtyyy.stockcontrol.view;
 
 import com.mrburtyyy.stockcontrol.controller.DBConnection;
+import com.mrburtyyy.stockcontrol.controller.ItemController;
 import com.mrburtyyy.stockcontrol.controller.ViewController;
 import java.math.BigDecimal;
+import java.util.Observer;
 
 /**
  *
  * @author Alex
  */
 public final class AddNewItemGUI extends javax.swing.JFrame {
+    
+    ItemController ic;
 
     /**
      * Creates new form AddNewItemGUI
@@ -21,6 +25,14 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
     public AddNewItemGUI() {
         initComponents();
         this.CenterAndShow();
+    }
+    
+    /**
+     * Adds an observer to the ItemController for updates.
+     * @param o 
+     */
+    public void addObserver(Observer o) {
+        ic.addObserver(o);
     }
     
     /**
@@ -209,7 +221,8 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
             DBConnection.GetInstance().AddItem(makeTxt.getText(), DBConnection.GetInstance().GetLastItemID() + 1,
                     modelTxt.getText(), BigDecimal.valueOf((Double) priceSpinner.getValue()), descriptionTxt.getText(), 
                     (Integer) stockSpinner.getValue(), imageLinkTxt.getText());
-        }    
+            ic.notifyObservers();
+        }
         
         // Close the AddNewItem GUI when the new Item has been added.
         ViewController.GetInstance().CloseWindow(this);

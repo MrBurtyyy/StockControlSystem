@@ -8,7 +8,9 @@
 
 package com.mrburtyyy.stockcontrol.controller;
 
+import com.mrburtyyy.stockcontrol.view.AddNewItemGUI;
 import java.awt.Component;
+import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -37,6 +39,12 @@ public class ViewController implements IViewController {
         }
         
         return instance;
+    }
+    
+    @Override
+    public void OpenAddItemAndObserver(Observer observer) {
+        AddNewItemGUI gui = new AddNewItemGUI();
+        gui.addObserver(observer);
     }
     
     /**

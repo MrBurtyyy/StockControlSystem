@@ -188,8 +188,7 @@ public class LoginAuthController implements ILoginAuthController {
      */
     @Override
     public boolean VerifyLogin(String usernameToCheck, char[] passwordToCheck) {        
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("StockControlSystemPU");
-        em = emf.createEntityManager();
+        EntityManager em = DBConnection.GetInstance().GetEntityManagerFactory().createEntityManager();
         
         Query q = em.createQuery("SELECT a FROM Admin a WHERE a.username = :userName");
         q.setParameter("userName", usernameToCheck);

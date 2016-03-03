@@ -5,6 +5,7 @@
  */
 package com.mrburtyyy.stockcontrol.controller;
 
+import com.mrburtyyy.stockcontrol.orm.CustomerOrder;
 import com.mrburtyyy.stockcontrol.orm.Item;
 import java.math.BigDecimal;
 import java.util.List;
@@ -100,6 +101,17 @@ public class DBConnection {
     public List<Item> FindAllItems() {
         EntityManager em = emf.createEntityManager();
         TypedQuery<Item> q = em.createNamedQuery("Item.findAll", Item.class);
+        return q.getResultList();
+    }
+    
+    /**
+     * Uses a TypedQuery to find all Customer Orders in the database
+     * and returns a List<> with all CustomerOrders contained.
+     * @return 
+     */
+    public List<CustomerOrder> FindAllOrders() {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<CustomerOrder> q = em.createNamedQuery("CustomerOrder.findAll", CustomerOrder.class);
         return q.getResultList();
     }
 

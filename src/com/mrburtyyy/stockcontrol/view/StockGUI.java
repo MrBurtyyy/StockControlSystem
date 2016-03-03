@@ -9,6 +9,7 @@ import com.mrburtyyy.stockcontrol.controller.DBConnection;
 import com.mrburtyyy.stockcontrol.controller.FilterSystemController;
 import com.mrburtyyy.stockcontrol.controller.QueryStringBuilder;
 import com.mrburtyyy.stockcontrol.controller.ViewController;
+import com.mrburtyyy.stockcontrol.model.OrderTableModel;
 import com.mrburtyyy.stockcontrol.model.StockItemTableModel;
 import java.awt.GraphicsEnvironment;
 import javax.swing.DefaultComboBoxModel;
@@ -21,7 +22,8 @@ import javax.swing.ListSelectionModel;
  */
 public class StockGUI extends javax.swing.JFrame {
 
-    StockItemTableModel tm;
+    StockItemTableModel itemTableModel;
+    OrderTableModel orderTableModel;
 
     /**
      * Creates new form MainGUI
@@ -30,17 +32,28 @@ public class StockGUI extends javax.swing.JFrame {
         initComponents();
         this.SetFullscreen();
         this.UpdateAllFilters();
-        this.InitialiseTable();
+        this.InitialiseItemTable();
+        this.InitialiseOrderTable();
     }
 
     /**
-     * Performs the initial setup of the main JTable and adds all items into it
+     * Performs the initial setup of the item JTable and adds all items into it
      * from the database.
      */
-    private void InitialiseTable() {
-        this.mainTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tm = new StockItemTableModel(DBConnection.GetInstance().FindAllItems());
-        this.mainTable.setModel(tm);
+    private void InitialiseItemTable() {
+        this.itemTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        itemTableModel = new StockItemTableModel(DBConnection.GetInstance().FindAllItems());
+        this.itemTable.setModel(itemTableModel);
+    }
+    
+    /**
+     * Performs the initial setup of the CustomerOrder JTable and adds all CustomerOrders
+     * into it from the database.
+     */
+    private void InitialiseOrderTable() {
+        this.orderTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        orderTableModel = new OrderTableModel(DBConnection.GetInstance().FindAllOrders());
+        this.orderTable.setModel(orderTableModel);
     }
 
     /**
@@ -83,7 +96,7 @@ public class StockGUI extends javax.swing.JFrame {
         filterButtonGroup = new javax.swing.ButtonGroup();
         jRadioButton1 = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        mainTable = new javax.swing.JTable();
+        itemTable = new javax.swing.JTable();
         makeComboBox = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -94,6 +107,8 @@ public class StockGUI extends javax.swing.JFrame {
         stockLevelComboBox = new javax.swing.JComboBox<>();
         filterAcceptButton = new javax.swing.JButton();
         filterResetButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        orderTable = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuFileClose = new javax.swing.JMenuItem();
@@ -108,7 +123,7 @@ public class StockGUI extends javax.swing.JFrame {
         setTitle("Stock Control System");
         setResizable(false);
 
-        mainTable.setModel(new javax.swing.table.DefaultTableModel(
+        itemTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -119,7 +134,7 @@ public class StockGUI extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(mainTable);
+        jScrollPane1.setViewportView(itemTable);
 
         makeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -152,6 +167,19 @@ public class StockGUI extends javax.swing.JFrame {
                 filterResetButtonActionPerformed(evt);
             }
         });
+
+        orderTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(orderTable);
 
         jMenu1.setText("File");
 
@@ -192,9 +220,9 @@ public class StockGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 962, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 962, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
                     .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
@@ -213,13 +241,17 @@ public class StockGUI extends javax.swing.JFrame {
                                     .addComponent(stockLevelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(priceComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(makeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(913, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 897, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -252,13 +284,13 @@ public class StockGUI extends javax.swing.JFrame {
 
     private void filterAcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterAcceptButtonActionPerformed
         QueryStringBuilder qsb = new QueryStringBuilder(this.makeComboBox, this.priceComboBox, this.stockLevelComboBox);
-        tm = new StockItemTableModel(DBConnection.GetInstance().ExecuteQuery(qsb.BuildQuery()));
-        this.mainTable.setModel(tm);
+        itemTableModel = new StockItemTableModel(DBConnection.GetInstance().ExecuteQuery(qsb.BuildQuery()));
+        this.itemTable.setModel(itemTableModel);
     }//GEN-LAST:event_filterAcceptButtonActionPerformed
 
     private void filterResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterResetButtonActionPerformed
-        tm = new StockItemTableModel(DBConnection.GetInstance().FindAllItems());
-        this.mainTable.setModel(tm);
+        itemTableModel = new StockItemTableModel(DBConnection.GetInstance().FindAllItems());
+        this.itemTable.setModel(itemTableModel);
         this.ResetFilterComboBoxes();
     }//GEN-LAST:event_filterResetButtonActionPerformed
 
@@ -305,6 +337,7 @@ public class StockGUI extends javax.swing.JFrame {
     private javax.swing.JButton filterAcceptButton;
     private javax.swing.ButtonGroup filterButtonGroup;
     private javax.swing.JButton filterResetButton;
+    private javax.swing.JTable itemTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -316,10 +349,11 @@ public class StockGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable mainTable;
     private javax.swing.JComboBox<String> makeComboBox;
     private javax.swing.JMenuItem menuFileClose;
+    private javax.swing.JTable orderTable;
     private javax.swing.JComboBox<String> priceComboBox;
     private javax.swing.JComboBox<String> stockLevelComboBox;
     // End of variables declaration//GEN-END:variables

@@ -6,10 +6,10 @@
 package com.mrburtyyy.stockcontrol.view;
 
 import com.mrburtyyy.stockcontrol.controller.DBConnection;
-import com.mrburtyyy.stockcontrol.controller.ItemController;
 import com.mrburtyyy.stockcontrol.controller.ViewController;
 import java.math.BigDecimal;
 import java.util.Observer;
+import javax.swing.JFrame;
 
 /**
  *
@@ -17,7 +17,7 @@ import java.util.Observer;
  */
 public final class AddNewItemGUI extends javax.swing.JFrame {
     
-    ItemController ic;
+    StockGUI frameToBeUpdated;
 
     /**
      * Creates new form AddNewItemGUI
@@ -27,13 +27,13 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
         this.CenterAndShow();
     }
     
-    /**
-     * Adds an observer to the ItemController for updates.
-     * @param o 
-     */
-    public void addObserver(Observer o) {
-        ic.addObserver(o);
-    }
+//    /**
+//     * Adds an observer to the ItemController for updates.
+//     * @param o 
+//     */
+//    public void addObserver(Observer o) {
+//        ic.addObserver(o);
+//    }
     
     /**
      * Centres and sets the GUI to visible.
@@ -41,6 +41,14 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
     public void CenterAndShow() {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+    
+    /**
+     * Sets the frame to be updated (StockGUI).
+     * @param frame 
+     */
+    public void SetFrameToBeUpdated(StockGUI frame) {
+        this.frameToBeUpdated = frame;
     }
     
     /**
@@ -98,7 +106,7 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
         addItemButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Add New Item");
@@ -221,11 +229,11 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
             DBConnection.GetInstance().AddItem(makeTxt.getText(), DBConnection.GetInstance().GetLastItemID() + 1,
                     modelTxt.getText(), BigDecimal.valueOf((Double) priceSpinner.getValue()), descriptionTxt.getText(), 
                     (Integer) stockSpinner.getValue(), imageLinkTxt.getText());
-            ic.notifyObservers();
+            // ic.notifyObservers();
+            frameToBeUpdated.InitialiseItemTable();
+            // Close the AddNewItem GUI when the new Item has been added.
+            ViewController.GetInstance().CloseWindow(this);
         }
-        
-        // Close the AddNewItem GUI when the new Item has been added.
-        ViewController.GetInstance().CloseWindow(this);
     }//GEN-LAST:event_addItemButtonActionPerformed
 
     /**

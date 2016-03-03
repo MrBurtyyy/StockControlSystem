@@ -5,6 +5,7 @@
  */
 package com.mrburtyyy.stockcontrol.controller;
 
+import com.mrburtyyy.stockcontrol.view.StockGUI;
 import java.util.Observer;
 import javax.swing.JFrame;
 
@@ -16,7 +17,7 @@ public interface IViewController {
     
     void OpenNewAndClose(JFrame open, JFrame close);
     
-    public void OpenAddItemAndObserver(Observer observer);
+    void OpenNewItemFrame(StockGUI toBeUpdated);
     
     void OpenWindow(JFrame open);
     

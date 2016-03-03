@@ -9,6 +9,7 @@
 package com.mrburtyyy.stockcontrol.controller;
 
 import com.mrburtyyy.stockcontrol.view.AddNewItemGUI;
+import com.mrburtyyy.stockcontrol.view.StockGUI;
 import java.awt.Component;
 import java.util.Observer;
 import javax.swing.JFrame;
@@ -39,12 +40,6 @@ public class ViewController implements IViewController {
         }
         
         return instance;
-    }
-    
-    @Override
-    public void OpenAddItemAndObserver(Observer observer) {
-        AddNewItemGUI gui = new AddNewItemGUI();
-        gui.addObserver(observer);
     }
     
     /**
@@ -112,6 +107,13 @@ public class ViewController implements IViewController {
     @Override
     public void CloseApplication() {
         System.exit(0);
+    }
+
+    @Override
+    public void OpenNewItemFrame(StockGUI toBeUpdated) {
+        AddNewItemGUI addItem = new AddNewItemGUI();
+        addItem.SetFrameToBeUpdated(toBeUpdated);
+        addItem.setVisible(true);
     }
     
 }

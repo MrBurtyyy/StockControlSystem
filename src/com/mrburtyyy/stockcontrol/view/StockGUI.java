@@ -12,6 +12,8 @@ import com.mrburtyyy.stockcontrol.controller.ViewController;
 import com.mrburtyyy.stockcontrol.model.OrderTableModel;
 import com.mrburtyyy.stockcontrol.model.StockItemTableModel;
 import java.awt.GraphicsEnvironment;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.ListSelectionModel;
@@ -20,10 +22,10 @@ import javax.swing.ListSelectionModel;
  *
  * @author Alex
  */
-public class StockGUI extends javax.swing.JFrame {
+public class StockGUI extends javax.swing.JFrame implements Observer {
 
-    StockItemTableModel itemTableModel;
-    OrderTableModel orderTableModel;
+    private StockItemTableModel itemTableModel;
+    private OrderTableModel orderTableModel;
 
     /**
      * Creates new form MainGUI
@@ -40,7 +42,7 @@ public class StockGUI extends javax.swing.JFrame {
      * Performs the initial setup of the item JTable and adds all items into it
      * from the database.
      */
-    private void InitialiseItemTable() {
+    public final void InitialiseItemTable() {
         this.itemTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         itemTableModel = new StockItemTableModel(DBConnection.GetInstance().FindAllItems());
         this.itemTable.setModel(itemTableModel);
@@ -82,6 +84,17 @@ public class StockGUI extends javax.swing.JFrame {
         this.makeComboBox.setSelectedIndex(0);
         this.priceComboBox.setSelectedIndex(0);
         this.stockLevelComboBox.setSelectedIndex(0);
+    }
+    
+    /**
+     * Called when the Observable class notifies its observers.
+     * @param o
+     * @param arg 
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+        this.UpdateAllFilters();
+        this.InitialiseItemTable();
     }
 
     /**
@@ -295,7 +308,7 @@ public class StockGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_filterResetButtonActionPerformed
 
     private void addItemMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemMenuItemActionPerformed
-        ViewController.GetInstance().OpenWindow(new AddNewItemGUI());
+        ViewController.GetInstance().OpenNewItemFrame(this);
     }//GEN-LAST:event_addItemMenuItemActionPerformed
 
     /**
@@ -357,4 +370,5 @@ public class StockGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> priceComboBox;
     private javax.swing.JComboBox<String> stockLevelComboBox;
     // End of variables declaration//GEN-END:variables
+
 }

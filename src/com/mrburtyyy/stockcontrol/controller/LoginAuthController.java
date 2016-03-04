@@ -214,6 +214,7 @@ public class LoginAuthController implements ILoginAuthController {
      * @param passwordToCheck
      * @return
      */
+    
     @Override
     public boolean VerifyLogin(String usernameToCheck, char[] passwordToCheck) {        
         EntityManager em = DBConnection.GetInstance().GetEntityManagerFactory().createEntityManager();

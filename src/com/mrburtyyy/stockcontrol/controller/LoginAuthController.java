@@ -39,8 +39,6 @@ import java.util.logging.Logger;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 /**
@@ -48,8 +46,6 @@ import javax.persistence.Query;
  * @author Alex
  */
 public class LoginAuthController implements ILoginAuthController {
-    
-    private static EntityManager em;
 
     public static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
 

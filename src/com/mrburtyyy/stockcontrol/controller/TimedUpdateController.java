@@ -5,12 +5,32 @@
  */
 package com.mrburtyyy.stockcontrol.controller;
 
+import javax.management.timer.Timer;
+
 /**
  *
  * @author Alex
  */
 public class TimedUpdateController {
     
-    private static TimedUpdated
+    private static TimedUpdateController instance;
+    
+    private Timer timi = null;
+    
+    private TimedUpdateController() {
+        instance = new TimedUpdateController();
+        timi = new Timer();
+        timi.start();
+    }
+    
+    public TimedUpdateController GetInstance() {
+        if (instance == null) {
+            instance = new TimedUpdateController();
+        }
+        
+        return instance;
+    }
+    
+    
     
 }

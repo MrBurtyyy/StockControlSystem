@@ -5,6 +5,7 @@
  */
 package com.mrburtyyy.stockcontrol.model;
 
+import com.mrburtyyy.stockcontrol.orm.Customer;
 import com.mrburtyyy.stockcontrol.orm.CustomerOrder;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -15,7 +16,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class OrderTableModel extends AbstractTableModel {
     
-    private final String[] columnNames = { "OrderID", "CustomerID", "Date Placed", "Current Status" };
+    private final String[] columnNames = { "OrderID", "Customer Name", "Date Placed", "Current Status" };
     
     private final List<CustomerOrder> data;
     
@@ -42,7 +43,8 @@ public class OrderTableModel extends AbstractTableModel {
                 value = order.getOrderID();
                 break;
             case 1:
-                value = order.getCustomerID();
+                value = order.getCustomerID().getTitle() + " " + order.getCustomerID().getFirstName() + 
+                        " " + order.getCustomerID().getLastName();
                 break;
             case 2:
                 value = order.getDate();

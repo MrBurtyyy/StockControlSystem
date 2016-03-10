@@ -12,10 +12,13 @@ import com.mrburtyyy.stockcontrol.controller.ViewController;
 import com.mrburtyyy.stockcontrol.model.OrderTableModel;
 import com.mrburtyyy.stockcontrol.model.StockItemTableModel;
 import java.awt.GraphicsEnvironment;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 /**
@@ -36,6 +39,23 @@ public class StockGUI extends javax.swing.JFrame implements Observer {
         this.UpdateAllFilters();
         this.InitialiseItemTable();
         this.InitialiseOrderTable();
+    }
+    
+    /**
+     * Adds a mouse listener to the order JTable.
+     */
+    private void OrderTableAddListener() {
+        this.orderTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JTable target = (JTable)e.getSource();
+                    int row = target.getSelectedRow();
+                    Object orderID = target.getModel().getValueAt(row, 0);
+                    ViewController.GetInstance().OpenWindow(new ViewOrderGUI());
+                }
+            }
+        });
     }
 
     /**

@@ -226,8 +226,8 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
         if (!this.ValidateData()) {
             ViewController.GetInstance().ShowErrorMessage(this, "Validation failed on one or more fields!");
         } else {
-            DBConnection.GetInstance().AddItem(makeTxt.getText(), DBConnection.GetInstance().GetLastItemID() + 1,
-                    modelTxt.getText(), BigDecimal.valueOf((Double) priceSpinner.getValue()), descriptionTxt.getText(), 
+            DBConnection.GetInstance().AddItem(makeTxt.getText(), -1, modelTxt.getText(),
+                    BigDecimal.valueOf((Double) priceSpinner.getValue()), descriptionTxt.getText(), 
                     (Integer) stockSpinner.getValue(), imageLinkTxt.getText());
             // ic.notifyObservers();
             frameToBeUpdated.InitialiseItemTable();

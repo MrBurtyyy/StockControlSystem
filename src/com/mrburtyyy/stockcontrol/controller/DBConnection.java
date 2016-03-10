@@ -138,15 +138,5 @@ public class DBConnection {
         }
         em.getTransaction().commit();
     }
-    
-    /**
-     * Returns the current last ItemID stored in the database.
-     * @return 
-     */
-    public int GetLastItemID() {
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Item> q = em.createNamedQuery("Item.findLastID", Item.class);
-        return q.getResultList().get(0).getItemID();
-    }
 
 }

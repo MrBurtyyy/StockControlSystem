@@ -29,6 +29,8 @@ public class StockGUI extends javax.swing.JFrame implements Observer {
 
     private StockItemTableModel itemTableModel;
     private OrderTableModel orderTableModel;
+    
+    private ViewOrderGUI instance = null;
 
     /**
      * Creates new form MainGUI
@@ -39,12 +41,14 @@ public class StockGUI extends javax.swing.JFrame implements Observer {
         this.UpdateAllFilters();
         this.InitialiseItemTable();
         this.InitialiseOrderTable();
+        this.OrderTableAddListener();
     }
     
     /**
      * Adds a mouse listener to the order JTable.
      */
     private void OrderTableAddListener() {
+        final StockGUI stockFrame = this;
         this.orderTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -52,7 +56,11 @@ public class StockGUI extends javax.swing.JFrame implements Observer {
                     JTable target = (JTable)e.getSource();
                     int row = target.getSelectedRow();
                     Object orderID = target.getModel().getValueAt(row, 0);
-                    ViewController.GetInstance().OpenWindow(new ViewOrderGUI());
+                    if (instance == null) {
+                        instance = new ViewOrderGUI();
+                    }
+                    
+                    ViewController.GetInstance().OpenViewOrderFrame(stockFrame, instance);
                 }
             }
         });
@@ -333,6 +341,7 @@ public class StockGUI extends javax.swing.JFrame implements Observer {
 
     private void addItemMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemMenuItemActionPerformed
         ViewController.GetInstance().OpenNewItemFrame(this);
+        this.setEnabled(false);
     }//GEN-LAST:event_addItemMenuItemActionPerformed
 
     /**

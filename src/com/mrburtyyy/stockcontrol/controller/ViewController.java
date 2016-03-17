@@ -10,8 +10,8 @@ package com.mrburtyyy.stockcontrol.controller;
 
 import com.mrburtyyy.stockcontrol.view.AddNewItemGUI;
 import com.mrburtyyy.stockcontrol.view.StockGUI;
+import com.mrburtyyy.stockcontrol.view.ViewOrderGUI;
 import java.awt.Component;
-import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -114,6 +114,12 @@ public class ViewController implements IViewController {
         AddNewItemGUI addItem = new AddNewItemGUI();
         addItem.SetFrameToBeUpdated(toBeUpdated);
         addItem.setVisible(true);
+    }
+    
+    @Override
+    public void OpenViewOrderFrame(StockGUI toBeUpdated, ViewOrderGUI orderGUI) {
+        orderGUI.SetFrameToBeUpdated(toBeUpdated);
+        orderGUI.setVisible(true);
     }
     
 }

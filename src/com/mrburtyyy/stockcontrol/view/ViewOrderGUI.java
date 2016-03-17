@@ -10,12 +10,32 @@ package com.mrburtyyy.stockcontrol.view;
  * @author Alex
  */
 public class ViewOrderGUI extends javax.swing.JFrame {
+    
+    StockGUI frameToBeUpdated;
 
     /**
      * Creates new form ViewOrderGUI
      */
     public ViewOrderGUI() {
         initComponents();
+        this.CenterAndShow();
+    }
+    
+    /**
+     * Sets the frame to be updated (StockGUI).
+     *
+     * @param frame
+     */
+    public void SetFrameToBeUpdated(StockGUI frame) {
+        this.frameToBeUpdated = frame;
+    }
+    
+    /**
+     * Centres and sets the GUI to visible.
+     */
+    public final void CenterAndShow() {
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
     /**

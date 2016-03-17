@@ -8,15 +8,13 @@ package com.mrburtyyy.stockcontrol.view;
 import com.mrburtyyy.stockcontrol.controller.DBConnection;
 import com.mrburtyyy.stockcontrol.controller.ViewController;
 import java.math.BigDecimal;
-import java.util.Observer;
-import javax.swing.JFrame;
 
 /**
  *
  * @author Alex
  */
 public final class AddNewItemGUI extends javax.swing.JFrame {
-    
+
     StockGUI frameToBeUpdated;
 
     /**
@@ -26,15 +24,16 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
         initComponents();
         this.CenterAndShow();
     }
-    
-//    /**
-//     * Adds an observer to the ItemController for updates.
-//     * @param o 
-//     */
-//    public void addObserver(Observer o) {
-//        ic.addObserver(o);
-//    }
-    
+
+    private void addWindowListener() {
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                
+            }
+        });
+    }
+
     /**
      * Centres and sets the GUI to visible.
      */
@@ -42,41 +41,42 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-    
+
     /**
      * Sets the frame to be updated (StockGUI).
-     * @param frame 
+     *
+     * @param frame
      */
     public void SetFrameToBeUpdated(StockGUI frame) {
         this.frameToBeUpdated = frame;
     }
-    
+
     /**
-     * Ensures that all of the data entered by the user
-     * is valid.
-     * @return 
+     * Ensures that all of the data entered by the user is valid.
+     *
+     * @return
      */
     public Boolean ValidateData() {
         if ("".equals(makeTxt.getText())) {
             return false;
         }
-        
+
         if ("".equals(modelTxt.getText())) {
             return false;
         }
-        
+
         if ("".equals(descriptionTxt.getText())) {
             return false;
         }
-        
+
         if ("".equals(imageLinkTxt.getText())) {
             return false;
         }
-        
+
         if ((Double) priceSpinner.getValue() < 0) {
             return false;
         }
-        
+
         return (Integer) stockSpinner.getValue() >= 0;
     }
 
@@ -107,6 +107,8 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
         cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Add New Item");
+        setAlwaysOnTop(true);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Add New Item");
@@ -227,7 +229,7 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
             ViewController.GetInstance().ShowErrorMessage(this, "Validation failed on one or more fields!");
         } else {
             DBConnection.GetInstance().AddItem(makeTxt.getText(), -1, modelTxt.getText(),
-                    BigDecimal.valueOf((Double) priceSpinner.getValue()), descriptionTxt.getText(), 
+                    BigDecimal.valueOf((Double) priceSpinner.getValue()), descriptionTxt.getText(),
                     (Integer) stockSpinner.getValue(), imageLinkTxt.getText());
             // ic.notifyObservers();
             frameToBeUpdated.InitialiseItemTable();

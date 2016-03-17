@@ -25,7 +25,12 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
         this.CenterAndShow();
         this.addWindowListener();
     }
-
+    
+    /**
+     * Adds a window listener to the AddNewItemGUI,
+     * to re-enable the StockGUI when the window has been
+     * closed.
+     */
     private void addWindowListener() {
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override

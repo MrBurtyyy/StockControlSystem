@@ -5,6 +5,8 @@
  */
 package com.mrburtyyy.stockcontrol.view;
 
+import com.mrburtyyy.stockcontrol.orm.CustomerOrder;
+
 /**
  *
  * @author Alex
@@ -12,6 +14,8 @@ package com.mrburtyyy.stockcontrol.view;
 public class ViewOrderGUI extends javax.swing.JFrame {
     
     StockGUI frameToBeUpdated;
+    
+    private CustomerOrder currentOrder;   
 
     /**
      * Creates new form ViewOrderGUI
@@ -19,6 +23,24 @@ public class ViewOrderGUI extends javax.swing.JFrame {
     public ViewOrderGUI() {
         initComponents();
         this.CenterAndShow();
+        this.addWindowListener();
+    }
+    
+    private void addWindowListener() {
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                frameToBeUpdated.setEnabled(true);
+            }
+        });
+    }
+    
+    /**
+     * Sets the current order to display.
+     * @param order 
+     */
+    public void SetData(CustomerOrder order) {
+        this.currentOrder = order;
     }
     
     /**
@@ -47,17 +69,25 @@ public class ViewOrderGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel1 = new javax.swing.JLabel();
+
+        jLabel1.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 775, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(jLabel1)
+                .addContainerGap(689, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 505, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(jLabel1)
+                .addContainerGap(442, Short.MAX_VALUE))
         );
 
         pack();
@@ -99,5 +129,6 @@ public class ViewOrderGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

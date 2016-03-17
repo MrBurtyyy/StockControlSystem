@@ -114,6 +114,13 @@ public class DBConnection {
         TypedQuery<CustomerOrder> q = em.createNamedQuery("CustomerOrder.findAll", CustomerOrder.class);
         return q.getResultList();
     }
+    
+    public CustomerOrder GetOrderByID(int orderID) {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<CustomerOrder> q = em.createNamedQuery("CustomerOrder.findByOrderID", CustomerOrder.class);
+        q.setParameter("orderID", orderID);
+        return q.getSingleResult();
+    }
 
     /**
      * Using the Java Persistence API, add an Item to the database by persisting

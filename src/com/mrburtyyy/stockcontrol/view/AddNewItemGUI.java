@@ -23,13 +23,14 @@ public final class AddNewItemGUI extends javax.swing.JFrame {
     public AddNewItemGUI() {
         initComponents();
         this.CenterAndShow();
+        this.addWindowListener();
     }
 
     private void addWindowListener() {
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                
+                frameToBeUpdated.setEnabled(true);
             }
         });
     }

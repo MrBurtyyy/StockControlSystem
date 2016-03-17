@@ -11,6 +11,7 @@ import com.mrburtyyy.stockcontrol.controller.QueryStringBuilder;
 import com.mrburtyyy.stockcontrol.controller.ViewController;
 import com.mrburtyyy.stockcontrol.model.OrderTableModel;
 import com.mrburtyyy.stockcontrol.model.StockItemTableModel;
+import com.mrburtyyy.stockcontrol.orm.CustomerOrder;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -55,12 +56,13 @@ public class StockGUI extends javax.swing.JFrame implements Observer {
                 if (e.getClickCount() == 2) {
                     JTable target = (JTable)e.getSource();
                     int row = target.getSelectedRow();
-                    Object orderID = target.getModel().getValueAt(row, 0);
+                    int orderID = (Integer) target.getValueAt(row, 0);
                     if (instance == null) {
                         instance = new ViewOrderGUI();
                     }
                     
                     ViewController.GetInstance().OpenViewOrderFrame(stockFrame, instance);
+                    instance.SetData(DBConnection.GetInstance().GetOrderByID(orderID));
                 }
             }
         });

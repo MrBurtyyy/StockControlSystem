@@ -5,7 +5,8 @@
  */
 package com.mrburtyyy.stockcontrol.model;
 
-import com.mrburtyyy.stockcontrol.orm.CustomerOrder;
+import com.mrburtyyy.stockcontrol.orm.Item;
+import com.mrburtyyy.stockcontrol.orm.OrderItems;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -13,13 +14,13 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Alex
  */
-public class OrderTableModel extends AbstractTableModel {
+public class SingleOrderModel extends AbstractTableModel {
     
-    private final String[] columnNames = { "OrderID", "Customer Name", "Date Placed", "Current Status" };
+    private final String[] columnNames = { "Item ID", "Item Make", "Item Model", "Quantity", "Price" };
     
-    private final List<CustomerOrder> data;
+    private final List<Item> data;
     
-    public OrderTableModel(List<CustomerOrder> newData) {
+    public SingleOrderModel(List<Item> newData) {
         this.data = newData;
     }
     
@@ -36,33 +37,18 @@ public class OrderTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object value = "??";
-        CustomerOrder order = data.get(rowIndex);
+        Item order = data.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                value = order.getOrderID();
+                value = order.getItemID();
                 break;
             case 1:
-                value = order.getCustomerID().getTitle() + " " + order.getCustomerID().getFirstName() + 
-                        " " + order.getCustomerID().getLastName();
+                order.getMake();
                 break;
             case 2:
-                value = order.getDate();
+                order.getModel();
                 break;
             case 3:
-                switch (order.getStatus()) {
-                    case 0:
-                        value = "Pending";
-                        break;
-                    case 1:
-                        value = "Processing";
-                        break;
-                    case 2:
-                        value = "Dispatched";
-                        break;
-                    default:
-                        value = "Pending";
-                        break;
-                }      
         }
         
         return value;
@@ -78,7 +64,7 @@ public class OrderTableModel extends AbstractTableModel {
         return getValueAt(0, col).getClass();
     }
         
-    public CustomerOrder getItemAt(int row) {
+    public Item getItemAt(int row) {
         return data.get(row);
     }
     

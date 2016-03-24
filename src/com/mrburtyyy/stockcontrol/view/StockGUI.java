@@ -61,7 +61,7 @@ public class StockGUI extends javax.swing.JFrame implements Observer {
                     }
                     
                     ViewController.GetInstance().OpenViewOrderFrame(stockFrame, instance);
-                    instance.SetData(DBConnection.GetInstance().GetOrderByID(orderID));
+                    instance.SetCurrentData(DBConnection.GetInstance().GetOrderByID(orderID));
                     
                     stockFrame.setEnabled(false);
                 }

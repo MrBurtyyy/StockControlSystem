@@ -5,7 +5,11 @@
  */
 package com.mrburtyyy.stockcontrol.view;
 
+import com.mrburtyyy.stockcontrol.controller.DBConnection;
+import com.mrburtyyy.stockcontrol.orm.Customer;
 import com.mrburtyyy.stockcontrol.orm.CustomerOrder;
+import com.mrburtyyy.stockcontrol.orm.Item;
+import java.util.List;
 
 /**
  *
@@ -15,7 +19,9 @@ public class ViewOrderGUI extends javax.swing.JFrame {
     
     StockGUI frameToBeUpdated;
     
-    private CustomerOrder currentOrder;   
+    private CustomerOrder currentOrder;    
+    private Customer currentCustomer;
+    private List<Item> orderItems;
 
     /**
      * Creates new form ViewOrderGUI
@@ -26,6 +32,11 @@ public class ViewOrderGUI extends javax.swing.JFrame {
         this.addWindowListener();
     }
     
+    /**
+     * Adds a window listener to the ViewOrderGUI,
+     * to re-enable the StockGUI when the window has been
+     * closed.
+     */
     private void addWindowListener() {
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -35,12 +46,50 @@ public class ViewOrderGUI extends javax.swing.JFrame {
         });
     }
     
-    /**
-     * Sets the current order to display.
-     * @param order 
-     */
-    public void SetData(CustomerOrder order) {
-        this.currentOrder = order;
+    public void UpdateGUIData() {
+        // Create a String and store the customers address information
+        // to place into the TextArea.
+        String address = null;
+        address = currentCustomer.getAddressOne() + "\n";
+        // Check to see if the user hasn't entered a 2nd address line
+        // (not all addresses have a 2nd line).
+        if (!"".equals(currentCustomer.getAddressTwo())) {
+            address += currentCustomer.getAddressTwo() + "\n";
+        }
+        address += currentCustomer.getTown() + "\n";
+        address += currentCustomer.getCounty() + "\n";
+        address += currentCustomer.getPostcode();
+        
+        this.customerFullNameText.setText(currentCustomer.getTitle() + " " + currentCustomer.getFirstName() + " " + currentCustomer.getLastName());
+        this.customerAddressText.setText(address);
+        
+        this.emailText.setText(currentCustomer.getEmail());
+        this.telephoneNumberText.setText(currentCustomer.getPhoneNo());
+        
+        String status;
+        switch (currentOrder.getStatus()) {
+            case 0:
+                status = "Pending";
+                break;
+            case 1:
+                status = "Processing";
+                break;
+            case 2:
+                status = "Dispatched";
+                break;
+            default:
+                status = "Pending";
+                break;
+        }
+        
+        this.currentStatusText.setText(status);
+    }
+    
+    public void SetCurrentData(CustomerOrder order) {
+        currentOrder = order;
+        currentCustomer = order.getCustomerID();
+        orderItems = DBConnection.GetInstance().FindOrderItems(currentOrder);
+        UpdateGUIData();
     }
     
     /**
@@ -69,27 +118,130 @@ public class ViewOrderGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        customerFullNameText = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        customerAddressText = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
+        emailText = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        telephoneNumberText = new javax.swing.JTextField();
+        processingButton = new javax.swing.JButton();
+        dispatchedButton = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        currentStatusText = new javax.swing.JTextField();
 
         setAlwaysOnTop(true);
 
-        jLabel1.setText("jLabel1");
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Customer Name:");
+
+        customerFullNameText.setEditable(false);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setText("Address:");
+
+        customerAddressText.setEditable(false);
+        customerAddressText.setColumns(20);
+        customerAddressText.setRows(5);
+        jScrollPane2.setViewportView(customerAddressText);
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("Email:");
+
+        emailText.setEditable(false);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setText("Telephone No.");
+
+        telephoneNumberText.setEditable(false);
+
+        processingButton.setText("PROCESSING ORDER");
+
+        dispatchedButton.setText("DISPATCHED");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("Current Status:");
+
+        currentStatusText.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(jLabel1)
-                .addContainerGap(689, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 135, Short.MAX_VALUE)
+                        .addComponent(processingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(dispatchedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(currentStatusText)
+                            .addComponent(telephoneNumberText)
+                            .addComponent(emailText)
+                            .addComponent(customerFullNameText)
+                            .addComponent(jScrollPane2))))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addComponent(jLabel1)
-                .addContainerGap(442, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(customerFullNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(emailText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(telephoneNumberText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(currentStatusText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(processingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dispatchedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -131,6 +283,20 @@ public class ViewOrderGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField currentStatusText;
+    private javax.swing.JTextArea customerAddressText;
+    private javax.swing.JTextField customerFullNameText;
+    private javax.swing.JButton dispatchedButton;
+    private javax.swing.JTextField emailText;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JButton processingButton;
+    private javax.swing.JTextField telephoneNumberText;
     // End of variables declaration//GEN-END:variables
 }

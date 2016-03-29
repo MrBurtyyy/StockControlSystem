@@ -5,6 +5,7 @@
  */
 package com.mrburtyyy.stockcontrol.model;
 
+import com.mrburtyyy.stockcontrol.controller.DBConnection;
 import com.mrburtyyy.stockcontrol.orm.Item;
 import com.mrburtyyy.stockcontrol.orm.OrderItems;
 import java.util.List;
@@ -18,9 +19,9 @@ public class SingleOrderModel extends AbstractTableModel {
     
     private final String[] columnNames = { "Item ID", "Item Make", "Item Model", "Quantity", "Price" };
     
-    private final List<Item> data;
+    private final List<OrderItems> data;
     
-    public SingleOrderModel(List<Item> newData) {
+    public SingleOrderModel(List<OrderItems> newData) {
         this.data = newData;
     }
     
@@ -37,18 +38,27 @@ public class SingleOrderModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object value = "??";
-        Item order = data.get(rowIndex);
+        OrderItems order = data.get(rowIndex);
+        Item orderItem = DBConnection.GetInstance().FindItemByID(order.getItemID());
         switch (columnIndex) {
             case 0:
                 value = order.getItemID();
                 break;
             case 1:
-                order.getMake();
+                value = orderItem.getMake();
                 break;
             case 2:
-                order.getModel();
+                value = orderItem.getModel();
                 break;
             case 3:
+                value = order.getQuantity();
+                break;
+            case 4:
+                value = orderItem.getPrice();
+                break;
+            default:
+                value = "ERROR LOADING DATA";
+                break;
         }
         
         return value;
@@ -64,7 +74,7 @@ public class SingleOrderModel extends AbstractTableModel {
         return getValueAt(0, col).getClass();
     }
         
-    public Item getItemAt(int row) {
+    public OrderItems getItemAt(int row) {
         return data.get(row);
     }
     

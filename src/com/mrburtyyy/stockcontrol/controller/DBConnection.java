@@ -69,13 +69,6 @@ public class DBConnection {
         TypedQuery<Item> q = em.createNamedQuery("OrderItems.findByOrderID", Item.class);
         return q.getResultList();
     }
-    
-    public List<Item> FindOrderItems(CustomerOrder orderID) {
-        EntityManager em = emf.createEntityManager();
-        Query q = em.createQuery("SELECT o FROM OrderItems o WHERE o.orderID = :orderID");
-        q.setParameter("orderID", orderID);
-        return q.getResultList();
-    }
 
     /**
      * Uses a TypedQuery to find a singular Item by its model code, returns an

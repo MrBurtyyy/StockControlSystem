@@ -6,10 +6,11 @@
 package com.mrburtyyy.stockcontrol.view;
 
 import com.mrburtyyy.stockcontrol.controller.DBConnection;
+import com.mrburtyyy.stockcontrol.model.SingleOrderModel;
 import com.mrburtyyy.stockcontrol.orm.Customer;
 import com.mrburtyyy.stockcontrol.orm.CustomerOrder;
 import com.mrburtyyy.stockcontrol.orm.Item;
-import java.util.List;
+import com.mrburtyyy.stockcontrol.orm.OrderItems;
 
 /**
  *
@@ -21,7 +22,6 @@ public class ViewOrderGUI extends javax.swing.JFrame {
     
     private CustomerOrder currentOrder;    
     private Customer currentCustomer;
-    private List<Item> orderItems;
 
     /**
      * Creates new form ViewOrderGUI
@@ -83,12 +83,20 @@ public class ViewOrderGUI extends javax.swing.JFrame {
         }
         
         this.currentStatusText.setText(status);
+        
+        float totalPrice = 0;
+        for (OrderItems i : currentOrder.getOrderItemsList()) {
+            Item item = DBConnection.GetInstance().FindItemByID(i.getItemID());
+            totalPrice += i.getQuantity() * item.getPrice().floatValue(); 
+        }
+        
+        this.totalPriceText.setText(Float.toString(totalPrice));
     }
     
     public void SetCurrentData(CustomerOrder order) {
         currentOrder = order;
         currentCustomer = order.getCustomerID();
-        orderItems = DBConnection.GetInstance().FindOrderItems(currentOrder);
+        this.orderItemsTable.setModel(new SingleOrderModel(currentOrder.getOrderItemsList()));
         UpdateGUIData();
     }
     
@@ -119,7 +127,7 @@ public class ViewOrderGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        orderItemsTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         customerFullNameText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -133,10 +141,12 @@ public class ViewOrderGUI extends javax.swing.JFrame {
         dispatchedButton = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         currentStatusText = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        totalPriceText = new javax.swing.JTextField();
 
         setAlwaysOnTop(true);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        orderItemsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -147,7 +157,7 @@ public class ViewOrderGUI extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(orderItemsTable);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Customer Name:");
@@ -181,6 +191,11 @@ public class ViewOrderGUI extends javax.swing.JFrame {
 
         currentStatusText.setEditable(false);
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setText("Total Price = £");
+
+        totalPriceText.setEditable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -189,7 +204,7 @@ public class ViewOrderGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 135, Short.MAX_VALUE)
+                        .addGap(0, 142, Short.MAX_VALUE)
                         .addComponent(processingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(dispatchedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -207,16 +222,20 @@ public class ViewOrderGUI extends javax.swing.JFrame {
                             .addComponent(emailText)
                             .addComponent(customerFullNameText)
                             .addComponent(jScrollPane2))))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(totalPriceText, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -240,7 +259,13 @@ public class ViewOrderGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(processingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dispatchedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(dispatchedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(totalPriceText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -293,10 +318,12 @@ public class ViewOrderGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable orderItemsTable;
     private javax.swing.JButton processingButton;
     private javax.swing.JTextField telephoneNumberText;
+    private javax.swing.JTextField totalPriceText;
     // End of variables declaration//GEN-END:variables
 }

@@ -94,7 +94,7 @@ public class DBConnection {
     public Item FindItemByID(int itemID) {
         EntityManager em = emf.createEntityManager();
         TypedQuery<Item> q = em.createNamedQuery("Item.findByItemID", Item.class);
-        q.setParameter("stockID", itemID);
+        q.setParameter("itemID", itemID);
         return q.getSingleResult();
     }
 

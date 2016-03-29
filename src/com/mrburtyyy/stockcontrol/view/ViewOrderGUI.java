@@ -90,7 +90,7 @@ public class ViewOrderGUI extends javax.swing.JFrame {
             totalPrice += i.getQuantity() * item.getPrice().floatValue(); 
         }
         
-        this.totalPriceText.setText(Float.toString(totalPrice));
+        this.totalPriceText.setText(String.format("%.2f", totalPrice));
     }
     
     public void SetCurrentData(CustomerOrder order) {

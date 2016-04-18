@@ -83,7 +83,7 @@ public class StockGUI extends javax.swing.JFrame implements Observer {
      * Performs the initial setup of the CustomerOrder JTable and adds all CustomerOrders
      * into it from the database.
      */
-    private void InitialiseOrderTable() {
+    public void InitialiseOrderTable() {
         this.orderTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         orderTableModel = new OrderTableModel(DBConnection.GetInstance().FindAllOrders());
         this.orderTable.setModel(orderTableModel);
@@ -153,6 +153,9 @@ public class StockGUI extends javax.swing.JFrame implements Observer {
         filterResetButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         orderTable = new javax.swing.JTable();
+        updateOrdersButton = new javax.swing.JButton();
+        ordersComboBox = new javax.swing.JComboBox<>();
+        updateFilterButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuFileClose = new javax.swing.JMenuItem();
@@ -225,6 +228,22 @@ public class StockGUI extends javax.swing.JFrame implements Observer {
         ));
         jScrollPane2.setViewportView(orderTable);
 
+        updateOrdersButton.setText("Update Orders");
+        updateOrdersButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateOrdersButtonActionPerformed(evt);
+            }
+        });
+
+        ordersComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Only Pending or Processing Orders", "All Orders" }));
+
+        updateFilterButton.setText("Update Filter");
+        updateFilterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateFilterButtonActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
 
         menuFileClose.setText("Close");
@@ -290,7 +309,15 @@ public class StockGUI extends javax.swing.JFrame implements Observer {
                         .addGap(38, 38, 38)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 962, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 869, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 869, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(updateOrdersButton, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                            .addComponent(updateFilterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(ordersComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -298,28 +325,35 @@ public class StockGUI extends javax.swing.JFrame implements Observer {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(makeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(priceComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(stockLevelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(filterResetButton, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
-                    .addComponent(filterAcceptButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(makeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(updateFilterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(priceComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(updateOrdersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(stockLevelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(filterResetButton, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                            .addComponent(filterAcceptButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(ordersComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(160, 160, 160))
         );
 
@@ -346,6 +380,22 @@ public class StockGUI extends javax.swing.JFrame implements Observer {
         ViewController.GetInstance().OpenNewItemFrame(this);
         this.setEnabled(false);
     }//GEN-LAST:event_addItemMenuItemActionPerformed
+
+    private void updateOrdersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrdersButtonActionPerformed
+        this.InitialiseOrderTable();
+    }//GEN-LAST:event_updateOrdersButtonActionPerformed
+
+    private void updateFilterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateFilterButtonActionPerformed
+        if (ordersComboBox.getSelectedIndex() == 0) {
+            this.orderTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            orderTableModel = new OrderTableModel(DBConnection.GetInstance().GetProcessingPendingOrders());
+            this.orderTable.setModel(orderTableModel);
+        } else {
+            this.orderTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            orderTableModel = new OrderTableModel(DBConnection.GetInstance().FindAllOrders());
+            this.orderTable.setModel(orderTableModel);
+        }       
+    }//GEN-LAST:event_updateFilterButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -403,8 +453,11 @@ public class StockGUI extends javax.swing.JFrame implements Observer {
     private javax.swing.JComboBox<String> makeComboBox;
     private javax.swing.JMenuItem menuFileClose;
     private javax.swing.JTable orderTable;
+    private javax.swing.JComboBox<String> ordersComboBox;
     private javax.swing.JComboBox<String> priceComboBox;
     private javax.swing.JComboBox<String> stockLevelComboBox;
+    private javax.swing.JButton updateFilterButton;
+    private javax.swing.JButton updateOrdersButton;
     // End of variables declaration//GEN-END:variables
 
 }

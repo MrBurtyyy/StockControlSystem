@@ -25,11 +25,13 @@ public class DBConnection {
 
     private static DBConnection instance = null;
     private static EntityManagerFactory emf;
+    private static EntityManager em;
     
     // END VARIABLE DECLARATION
 
     public DBConnection() {
         emf = Persistence.createEntityManagerFactory("StockControlSystemPU");
+        em = emf.createEntityManager();
     }
 
     /**
@@ -65,7 +67,6 @@ public class DBConnection {
     }
     
     public List<Item> FindItemsByOrder(int orderID) {
-        EntityManager em = emf.createEntityManager();
         TypedQuery<Item> q = em.createNamedQuery("OrderItems.findByOrderID", Item.class);
         return q.getResultList();
     }
@@ -78,7 +79,6 @@ public class DBConnection {
      * @return
      */
     public Item FindItemByModel(String itemModel) {
-        EntityManager em = emf.createEntityManager();
         TypedQuery<Item> q = em.createNamedQuery("Item.findByModel", Item.class);
         q.setParameter("model", itemModel);
         return q.getSingleResult();
@@ -92,7 +92,6 @@ public class DBConnection {
      * @return
      */
     public Item FindItemByID(int itemID) {
-        EntityManager em = emf.createEntityManager();
         TypedQuery<Item> q = em.createNamedQuery("Item.findByItemID", Item.class);
         q.setParameter("itemID", itemID);
         return q.getSingleResult();
@@ -105,7 +104,6 @@ public class DBConnection {
      * @return
      */
     public List<Item> FindAllItems() {
-        EntityManager em = emf.createEntityManager();
         TypedQuery<Item> q = em.createNamedQuery("Item.findAll", Item.class);
         return q.getResultList();
     }
@@ -116,13 +114,11 @@ public class DBConnection {
      * @return 
      */
     public List<CustomerOrder> FindAllOrders() {
-        EntityManager em = emf.createEntityManager();
         TypedQuery<CustomerOrder> q = em.createNamedQuery("CustomerOrder.findAll", CustomerOrder.class);
         return q.getResultList();
     }
     
     public CustomerOrder GetOrderByID(int orderID) {
-        EntityManager em = emf.createEntityManager();
         TypedQuery<CustomerOrder> q = em.createNamedQuery("CustomerOrder.findByOrderID", CustomerOrder.class);
         q.setParameter("orderID", orderID);
         return q.getSingleResult();
@@ -141,8 +137,7 @@ public class DBConnection {
      * @param imageLink
      */
     public void AddItem(String make, int stockID, String model, BigDecimal price, String description, int stockLevel, String imageLink) {
-        Item item = new Item(model, stockID, make, price, description, stockLevel, imageLink);
-        EntityManager em = emf.createEntityManager();
+        Item item = new Item(stockID, make, model, price, description, stockLevel, imageLink);
         em.getTransaction().begin();
         try {
             em.persist(item);
@@ -150,6 +145,40 @@ public class DBConnection {
             em.getTransaction().rollback();
         }
         em.getTransaction().commit();
+    }
+    
+    public List<CustomerOrder> GetProcessingPendingOrders() {
+        TypedQuery<CustomerOrder> q = em.createNamedQuery("CustomerOrder.findProcessingPendingOrder", CustomerOrder.class);
+        return q.getResultList();
+    }
+    
+    /**
+     * Updates the status of an order.
+     * @param order
+     * @param status 
+     */
+    public void UpdateOrderStatus(CustomerOrder order, int status) {
+        em.getTransaction().begin();
+        try {
+            order.setStatus(status);
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+        }
+        
+        em.getTransaction().commit();
+    }
+    
+    /**
+     * Update the quantity of stock in the warehouse.
+     * @param itemID
+     * @param newQuantity 
+     */
+    public void UpdateQuantity(int itemID, int newQuantity) {
+        Item i = em.find(Item.class, itemID);
+        
+        int newStockLevel = i.getStockLevel() - newQuantity;
+        
+        i.setStockLevel(newStockLevel);
     }
 
 }

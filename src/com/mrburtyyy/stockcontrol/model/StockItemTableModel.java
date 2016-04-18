@@ -54,6 +54,10 @@ public class StockItemTableModel extends AbstractTableModel {
                 value = item.getPrice();
                 break;
             case 5:
+                if (item.getStockLevel() < 0) {
+                    value = 0;
+                    break;
+                }
                 value = item.getStockLevel();
                 break;
                 

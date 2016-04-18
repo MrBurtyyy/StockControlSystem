@@ -38,7 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CustomerOrder.findAll", query = "SELECT c FROM CustomerOrder c"),
     @NamedQuery(name = "CustomerOrder.findByOrderID", query = "SELECT c FROM CustomerOrder c WHERE c.orderID = :orderID"),
     @NamedQuery(name = "CustomerOrder.findByDate", query = "SELECT c FROM CustomerOrder c WHERE c.date = :date"),
-    @NamedQuery(name = "CustomerOrder.findByStatus", query = "SELECT c FROM CustomerOrder c WHERE c.status = :status")})
+    @NamedQuery(name = "CustomerOrder.findByStatus", query = "SELECT c FROM CustomerOrder c WHERE c.status = :status"),
+    @NamedQuery(name = "CustomerOrder.findProcessingPendingOrder", query = "SELECT c FROM CustomerOrder c WHERE c.status = 0 OR c.status = 1")})
 public class CustomerOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;

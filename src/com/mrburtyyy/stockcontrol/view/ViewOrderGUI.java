@@ -11,6 +11,10 @@ import com.mrburtyyy.stockcontrol.orm.Customer;
 import com.mrburtyyy.stockcontrol.orm.CustomerOrder;
 import com.mrburtyyy.stockcontrol.orm.Item;
 import com.mrburtyyy.stockcontrol.orm.OrderItems;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -183,8 +187,18 @@ public class ViewOrderGUI extends javax.swing.JFrame {
         telephoneNumberText.setEditable(false);
 
         processingButton.setText("PROCESSING ORDER");
+        processingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                processingButtonActionPerformed(evt);
+            }
+        });
 
         dispatchedButton.setText("DISPATCHED");
+        dispatchedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dispatchedButtonActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Current Status:");
@@ -271,6 +285,30 @@ public class ViewOrderGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void processingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processingButtonActionPerformed
+        DBConnection.GetInstance().UpdateOrderStatus(currentOrder, 1);
+        UpdateGUIData();
+        frameToBeUpdated.InitialiseOrderTable();
+    }//GEN-LAST:event_processingButtonActionPerformed
+
+    private void dispatchedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dispatchedButtonActionPerformed
+                
+        List<OrderItems> listOfItems = currentOrder.getOrderItemsList();
+        
+        for (OrderItems item : listOfItems) {
+            DBConnection.GetInstance().UpdateQuantity(item.getItemID(), item.getQuantity());
+        }
+        
+        DBConnection.GetInstance().UpdateOrderStatus(currentOrder, 2);
+        
+        UpdateGUIData();
+        
+        frameToBeUpdated.InitialiseOrderTable();
+        frameToBeUpdated.InitialiseItemTable();
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_dispatchedButtonActionPerformed
 
     /**
      * @param args the command line arguments
